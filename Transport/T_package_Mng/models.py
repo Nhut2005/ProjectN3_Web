@@ -7,6 +7,7 @@ class Employee(models.Model):
 	birth_day = models.DateField()
 	email = models.CharField(max_length=255)
 	Role = models.CharField(max_length=255)
+	active = models.BooleanField(default=True)
 
 class Customer(models.Model):
 	name = models.CharField(max_length=255)
@@ -15,7 +16,9 @@ class Customer(models.Model):
 	email = models.CharField(max_length=255)
 	address = models.CharField(max_length=255)
 	phone = models.CharField(max_length=255)
-
+	active = models.BooleanField(default=True)
+	# def __str__(self):
+	# 	    return f"{self.name} {self.gender}"
 class Order(models.Model):
 	name =models.CharField(max_length=255)
 	size = models.CharField(max_length=255)
