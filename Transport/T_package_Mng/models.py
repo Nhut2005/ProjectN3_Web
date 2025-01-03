@@ -25,6 +25,12 @@ class Order(models.Model):
 	price = models.FloatField()
 	note = models.CharField(max_length=255)
 
+class inforTransport(models.Model):
+	method = models.CharField(max_length=255)
+	ìnforcompany = models.CharField(max_length=255)
+	inforprices = models.FloatField()
+	service = models.CharField(max_length=255)
+	
 	
 	
 	
