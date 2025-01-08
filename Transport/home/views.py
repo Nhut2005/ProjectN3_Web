@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from .models import Employee
+from .models import Order
 
 
 # Create your views here.
@@ -9,19 +9,19 @@ from .models import Employee
 def home (request):
     return render(request, 'home/home.html')
 
-def employee(request):
-    employee = Employee.objects.all()  # Đảm bảo thụt lề đúng
-    template = loader.get_template('home/employee.html')
+def package(request):
+    package = Order.objects.all()  
+    template = loader.get_template('home/package.html')
     context = {
-        'employee': employee,
+        'package': package,
     }
     return HttpResponse(template.render(context, request))
 
-def edit_employee(request):
-    employee = Employee.objects.get(id=1)  # Đảm bảo thụt lề đúng
-    template = loader.get_template('home/employee-edit.html')
+def edit_package(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/package-edit.html')
     context = {
-        'employee': employee,
+        'package': package,
     }
     return HttpResponse(template.render(context, request))
 
