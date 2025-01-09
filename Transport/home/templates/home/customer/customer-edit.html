@@ -1,0 +1,68 @@
+{% extends "master.html" %}
+
+{% comment %} {% block nav-bar %}
+    {% include '../includes/nav-bar.html' %}
+{% endblock %} {% endcomment %}
+
+{% block footer %}
+    {% include '../includes/footer.html' %}
+{% endblock %}
+
+{% block left-menu %}
+    {% include '../includes/left-menu.html' %}
+{% endblock %}
+
+{% block content %}   
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header">Create Employee</h5>
+                <div class="card-body">
+                    <small class="text-light fw-medium"></small>
+
+                    <!--  name -->
+                    <div class="mt-2 mb-2">
+                        <label for="largeInput" class="form-label">Name</label>
+                        <input id="largeInput" class="form-control form-control-lg" type="text" placeholder="Nguyen Van A">
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="mb-2">
+                        <label for="defaultInput" class="form-label">Gender</label>
+                        <input id="defaultInput" class="form-control" type="text" placeholder="Nam/Nữ">
+                    </div>
+                      <!-- Day -->
+                    <div class="mb-2">
+                        <label for="smallInput" class="form-label">Birthday</label>
+                        <input id="smallInput" class="form-control form-control-sm" type="text" placeholder="dd/mm/yy">
+                    </div>
+                    <!-- Emalil -->
+                    <div class="mb-2">
+                        <label for="smallInput" class="form-label">Email</label>
+                        <input id="smallInput" class="form-control form-control-sm" type="text" placeholder="nguyenvana@gmail.com">
+                    </div>
+                    <!-- Address -->
+                    <div class="mb-2">
+                        <label for="smallInput" class="form-label">Address</label>
+                        <input id="smallInput" class="form-control form-control-sm" type="text" placeholder="Thu Duc Viet Nam">
+                    </div>
+                    <!-- Phone -->
+                    <div class="mb-2">
+                        <label for="smallInput" class="form-label">Email</label>
+                        <input id="smallInput" class="form-control form-control-sm" type="text" placeholder="(+84)111 222 333">
+                    </div>
+
+
+                    
+
+                    
+                    
+                    <!-- Save button -->
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Employee(models.Model):
 	name = models.CharField(max_length=255)
-	gender = models.BooleanField()
+	gender = models.CharField(max_length=255)
 	birth_day = models.DateField()
 	email = models.CharField(max_length=255)
 	Role = models.CharField(max_length=255)
@@ -11,7 +11,7 @@ class Employee(models.Model):
 
 class Customer(models.Model):
 	name = models.CharField(max_length=255)
-	gender = models.BooleanField()
+	gender = models.CharField(max_length=255)
 	birth_day = models.DateField()
 	email = models.CharField(max_length=255)
 	address = models.CharField(max_length=255)
