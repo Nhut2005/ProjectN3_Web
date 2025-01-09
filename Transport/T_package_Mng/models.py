@@ -22,12 +22,13 @@ class Customer(models.Model):
 class Order(models.Model):
 	name =models.CharField(max_length=255)
 	size = models.CharField(max_length=255)
-	quantity = models.FloatField()
+	quantity = models.IntegerField()
 	origin = models.CharField(max_length=255)
 	ship_service = models.CharField(max_length=255)
 	price = models.FloatField()
 	note = models.CharField(max_length=255)
-
+	def __str__(self):
+		return f"{self.name} {self.size}"
 class inforTransport(models.Model):
 	method = models.CharField(max_length=255)
 	ìnforcompany = models.CharField(max_length=255)
