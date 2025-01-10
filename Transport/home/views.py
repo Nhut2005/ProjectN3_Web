@@ -4,7 +4,7 @@ from django.template import loader
 from .models import Order
 from .models import Customer
 from .models import Employee
-
+from .forms import PackageNewForm
 
 
 # Create your views here.
@@ -37,12 +37,16 @@ def delete_package(request):
     return HttpResponse(template.render(context, request))
 
 def new_package(request):
-    package = Order.objects.filter(id=1).first() 
-    template = loader.get_template('home/package/package-new.html')
-    context = {
-        'package': package,
-    }
-    return HttpResponse(template.render(context, request))
+    if request.method == "POST":
+        form = PackageNewForm(request.POST)
+        print(form)  
+    if form.is_valid():
+            # Xử lý dữ liệu từ form ở đây (nếu cần)
+            return redirect('/package')  # Chuyển hướng đến trang 'package'
+    else:
+        form = PackageNewForm()
+
+    return render(request, 'home/package/package-new.html', {'form': form})
 #employee
 def employee(request):
     employee = Employee.objects.all()  
@@ -61,7 +65,7 @@ def edit_employee(request):
     return HttpResponse(template.render(context, request))
 
 def delete_employee(request):
-    employee = Order.objects.filter(id=1).first() 
+    employee = Employee.objects.filter(id=1).first() 
     template = loader.get_template('home/employee/employee-delete.html')
     context = {
         'employee': employee,
@@ -69,7 +73,7 @@ def delete_employee(request):
     return HttpResponse(template.render(context, request))
 
 def new_employee(request):
-    package = Order.objects.filter(id=1).first() 
+    package = Employee.objects.filter(id=1).first() 
     employee = loader.get_template('home/employee/employee-new.html')
     context = {
         'employee': employee,
@@ -93,7 +97,7 @@ def edit_customer(request):
     return HttpResponse(template.render(context, request))
 
 def delete_customer(request):
-    customer = Order.objects.filter(id=1).first() 
+    customer = Customer.objects.filter(id=1).first() 
     template = loader.get_template('home/customer/customer-delete.html')
     context = {
         'customer': customer,
@@ -101,7 +105,7 @@ def delete_customer(request):
     return HttpResponse(template.render(context, request))
 
 def new_customer(request):
-    package = Order.objects.filter(id=1).first() 
+    package = Customer.objects.filter(id=1).first() 
     template = loader.get_template('home/customer/customer-new.html')
     context = {
         'customer': customer,
