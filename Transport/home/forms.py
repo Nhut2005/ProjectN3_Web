@@ -8,3 +8,12 @@ class PackageNewForm(forms.Form):
     ship_service = forms.CharField(label="ship_service", max_length=100)
     price = forms.FloatField(label="price")  
     note = forms.CharField(label="note", max_length=100)
+
+class CustomerNewForm(forms.Form): 
+    name = forms.CharField(label="name", max_length=100)
+    gender = forms.CharField(label="gender", max_length=100)
+    birth_day = forms.DateField(label="birth_day")
+    email = forms.CharField(label="email", max_length=100)
+    address = forms.CharField(label="address", max_length=100)
+    phone = forms.CharField(label="phone")  
+    active = forms.BooleanField(label="active")

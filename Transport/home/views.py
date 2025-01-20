@@ -5,7 +5,7 @@ from django.template import loader
 from .models import Order
 from .models import Customer
 from .models import Employee
-from .forms import PackageNewForm
+from .forms import PackageNewForm,CustomerNewForm
 
 
 # Create your views here.
@@ -49,7 +49,7 @@ def new_package(request):
         
     }
     return HttpResponse(template.render(context, request))
-from django.shortcuts import render, redirect
+
 
 #employee
 def employee(request):
@@ -109,9 +109,14 @@ def delete_customer(request):
     return HttpResponse(template.render(context, request))
 
 def new_customer(request):
-    customer = Customer.objects.filter(id=1).first() 
+    if request.method == 'POST':
+        form = CustomerNewForm(request.POST)
+        print(form)
+        if form.is_valid():
+            return HttpResponseRedirect("/customer")
+
     template = loader.get_template('home/customer/customer-new.html')
     context = {
-        'customer': customer,
+        
     }
     return HttpResponse(template.render(context, request))
