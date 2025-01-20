@@ -6,6 +6,7 @@ class Employee(models.Model):
 	gender = models.CharField(max_length=255)
 	birth_day = models.DateField()
 	email = models.CharField(max_length=255)
+	phone = models.CharField(max_length=15, default="Không có số")
 	Role = models.CharField(max_length=255)
 	active = models.BooleanField(default=True)
 

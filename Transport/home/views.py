@@ -5,8 +5,8 @@ from django.template import loader
 from .models import Order
 from .models import Customer
 from .models import Employee
-from .forms import PackageNewForm,CustomerNewForm
-
+from .forms import PackageNewForm, CustomerNewForm
+from .forms import EmployeeNewForm
 
 # Create your views here.
 
@@ -77,10 +77,15 @@ def delete_employee(request):
     return HttpResponse(template.render(context, request))
 
 def new_employee(request):
-    customer = Customer.objects.all()  
+    if request.method == 'POST':
+        form = EmployeeNewForm(request.POST)
+        print(form)
+        if form.is_valid():
+            return HttpResponseRedirect("/employee")
+
     template = loader.get_template('home/employee/employee-new.html')
     context = {
-        'employee': employee,
+        
     }
     return HttpResponse(template.render(context, request))
 #customer

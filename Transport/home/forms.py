@@ -17,3 +17,12 @@ class CustomerNewForm(forms.Form):
     address = forms.CharField(label="address", max_length=100)
     phone = forms.CharField(label="phone")  
     active = forms.BooleanField(label="active")
+
+class EmployeeNewForm(forms.Form): 
+    name = forms.CharField(label="name", max_length=100)
+    gender = forms.CharField(label="gender", max_length=100)
+    birth_day = forms.DateField(label="birth_day")
+    email = forms.CharField(label="email", max_length=100)
+    phone = forms.CharField(label="phone", max_length=100)
+    Role = forms.CharField(label="Role")  
+    active = forms.BooleanField(label="active")
