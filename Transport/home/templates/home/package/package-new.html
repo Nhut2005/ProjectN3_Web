@@ -21,7 +21,7 @@
                 <small class="text-body float-end">Default label</small>
               </div>
               <div class="card-body">
-                <form method="post" action="/package-new">
+                <form method="post" action="/package-new/">
                 {% csrf_token %}
                   <div class="mb-4">
                     <label class="form-label" for="name">Package Name</label>
@@ -34,7 +34,7 @@
                   <div class="mb-4">
                     <label class="form-label" for="quantity">Quantity</label>
                     <div class="input-group input-group-merge">
-                        <input class="form-control" type="number" name="quantity" value="18" id="quantity">
+                        <input class="form-control" type="number" value="18" name="quantity" id="quantity">
                     </div>
                   </div>
                   <div class="mb-4">
@@ -46,7 +46,10 @@
                     <label class="form-label" for="ship_service">Shipping</label>
                     <input type="text" class="form-control" name="ship_service" id="ship_service" placeholder="Hang Khong">
                   </div>
-                
+                  <div class="mb-4">
+                    <label class="form-label" for="price">Price</label>
+                    <input type="text" class="form-control" name="price" id="price" placeholder="1000$">
+                  </div>
                   <div class="mb-4">
                     <label class="form-label" for="note">Note</label>
                     <textarea name='note' id="note" class="form-control" placeholder="Enter your note for package"></textarea>

@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.template import loader
 from .models import Order
 from .models import Customer
@@ -37,16 +38,19 @@ def delete_package(request):
     return HttpResponse(template.render(context, request))
 
 def new_package(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = PackageNewForm(request.POST)
-        print(form)  
-    if form.is_valid():
-            # Xử lý dữ liệu từ form ở đây (nếu cần)
-            return redirect('/package')  # Chuyển hướng đến trang 'package'
-    else:
-        form = PackageNewForm()
+        print(form)
+        if form.is_valid():
+            return HttpResponseRedirect("/package/")
 
-    return render(request, 'home/package/package-new.html', {'form': form})
+    template = loader.get_template('home/package/package-new.html')
+    context = {
+        
+    }
+    return HttpResponse(template.render(context, request))
+from django.shortcuts import render, redirect
+
 #employee
 def employee(request):
     employee = Employee.objects.all()  
@@ -73,8 +77,8 @@ def delete_employee(request):
     return HttpResponse(template.render(context, request))
 
 def new_employee(request):
-    package = Employee.objects.filter(id=1).first() 
-    employee = loader.get_template('home/employee/employee-new.html')
+    customer = Customer.objects.all()  
+    template = loader.get_template('home/employee/employee-new.html')
     context = {
         'employee': employee,
     }
@@ -105,7 +109,7 @@ def delete_customer(request):
     return HttpResponse(template.render(context, request))
 
 def new_customer(request):
-    package = Customer.objects.filter(id=1).first() 
+    customer = Customer.objects.filter(id=1).first() 
     template = loader.get_template('home/customer/customer-new.html')
     context = {
         'customer': customer,

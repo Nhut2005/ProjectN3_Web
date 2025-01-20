@@ -7,7 +7,7 @@ urlpatterns = [
     path('package/', views.package, name="package"),
     path('package-edit/', views.edit_package, name="package-edit"),
     path('package-delete/', views.delete_package, name="package-delete"),
-    path('package-new', views.new_package, name="package-new"),
+    path('package-new/', views.new_package, name="package-new"),
 
     path('employee', views.employee, name="employee"),
     path('employee-edit/', views.edit_employee, name="employee-edit"),
