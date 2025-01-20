@@ -127,3 +127,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CSRF_TRUSTED_ORIGINS = ["https://*.fly.dev"]
+SECURE_CROSS_ORIGIN_OPENER_POLICY=["https://app.powerbi.com/reportEmbed?reportId=fc559f1e-0b3f-4dfd-be2e-dab88a68c502&autoAuth=true&embeddedDemo=true"]
