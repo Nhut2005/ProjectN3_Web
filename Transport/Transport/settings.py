@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'T_package_Mng',
     'home',
+    'Transport',
 ]
 
 MIDDLEWARE = [
@@ -81,8 +82,8 @@ DATABASES = {
         'NAME': 'DjangoDB',
         'USER': 'root',
         'PASSWORD': 'my-secret-pw',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'HOST':'db',
+        'PORT':'5432',
     }
 }
 
