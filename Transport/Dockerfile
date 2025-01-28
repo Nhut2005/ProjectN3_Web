@@ -1,6 +1,8 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
 FROM python:3.13-slim
 
+RUN adduser --disabled-password --gecos '' appuser
+
 # Đặt thư mục làm việc 
 WORKDIR /app
 
@@ -17,8 +19,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy mã nguồn dự án
 COPY . .
 
-# Expose cổng 9000
-EXPOSE 9000
+# Expose cổng 8000
+EXPOSE 8000
 
 # Chạy lệnh khởi động server Django
-CMD ["python", "manage.py", "runserver", "0.0.0.0:9000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
