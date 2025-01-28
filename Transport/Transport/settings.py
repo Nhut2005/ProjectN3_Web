@@ -87,6 +87,16 @@ DATABASES = {
     }
 }
 
+ELASTICSEARCH_DSL = { 
+    'default': {
+    'hosts': 'http://localhost:9200/'
+    }
+}
+
+
+# Establish connection
+connections.create_connection (hosts=['http://localhost:9200/'])
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
