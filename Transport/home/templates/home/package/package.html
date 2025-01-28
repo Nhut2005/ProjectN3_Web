@@ -12,15 +12,14 @@
     {% include '../../includes/left-menu.html' %}
 {% endblock %}
 
-
 {% block content %}   
-<div class="card" style="margin: auto; width: 90%; text-align: center;">
-  <div class ="card">
+<div class="card" style="margin: auto; width: 95%; text-align: center;"> <!-- Tăng chiều rộng -->
+  <div class="card">
     <iframe title="DjangoDB" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=fc559f1e-0b3f-4dfd-be2e-dab88a68c502&autoAuth=true&embeddedDemo=true" frameborder="0" allowFullScreen="true"></iframe>
-    <div>
+  </div>
   <h5 class="card-header" style="text-align: center;">Package</h5>
-  <div class="table-responsive text-nowrap">
-    <table class="table" style="margin: auto;">
+  <div class="table-responsive text-nowrap" style="padding: 10px;"> <!-- Thêm padding -->
+    <table class="table table-bordered" style="width: 100%; margin: auto;"> <!-- Đặt width 100% -->
       <thead>
         <tr>
           <th>Name</th>
@@ -46,7 +45,6 @@
           <td>{{ item.ship_service }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.note }}</td>
-          
           <td>
             <div class="dropdown">
               <button 
@@ -54,9 +52,7 @@
                 class="btn p-0 dropdown-toggle hide-arrow" 
                 data-bs-toggle="dropdown"
               >
-                
                 <i class="icon-base bx bx-dots-vertical-rounded"></i>
-
               </button>
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="package-edit/{{ item.id }}">
@@ -75,4 +71,3 @@
   </div>
 </div>
 {% endblock %}
-

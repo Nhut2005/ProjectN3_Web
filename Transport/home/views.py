@@ -7,14 +7,25 @@ from .models import Customer
 from .models import Employee
 from .forms import PackageNewForm, CustomerNewForm
 from .forms import EmployeeNewForm
+from django.core.cache import cache 
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
-
-def home (request):
+@cache_page(60 * 5) # Cache trong 15 phút
+def home(request):
     return render(request, 'home/home.html')
 #package
+def clear_cache(request):
+    cache.delete('package') # Xóa cache theo key
+
 def package(request):
-    package = Order.objects.all()  
+    package = cache.get('package')
+    if not package:
+        # Nếu không có, tạo dữ liệu và lưu vào cache 
+        package = Order.objects.all()  
+        cache.set('package', package, timeout=60*3) # Lưu cache trong 60 giây
+
+
     template = loader.get_template('home/package/package.html')
     context = {
         'package': package,

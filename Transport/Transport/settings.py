@@ -82,8 +82,8 @@ DATABASES = {
         'NAME': 'DjangoDB',
         'USER': 'root',
         'PASSWORD': 'my-secret-pw',
-        'HOST':'db',
-        'PORT':'5432',
+        'HOST':'127.0.0.1',
+        'PORT':'3306',
     }
 }
 
@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://redis:6379/1',  # Tên service trong docker-compose.yml
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # Tên service trong docker-compose.yml
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
