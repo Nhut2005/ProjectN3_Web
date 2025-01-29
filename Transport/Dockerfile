@@ -6,12 +6,20 @@ RUN adduser --disabled-password --gecos '' appuser
 # Đặt thư mục làm việc 
 WORKDIR /app
 
-# Cài đặt các gói hệ thống cần thiết
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Cài đặt các gói cần thiết cho mysqlclient
+# RUN apt-get update && apt-get install -y \
+#     pkg-config \
+#     libmysqlclient-dev \
+#     build-essential
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    pkg-config \
+    default-libmysqlclient-dev \
+    build-essential && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
+   
 # Copy tập yêu cầu và cài đặt dependencies 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

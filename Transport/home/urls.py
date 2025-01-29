@@ -8,6 +8,7 @@ urlpatterns = [
     path('package-edit/', views.edit_package, name="package-edit"),
     path('package-delete/', views.delete_package, name="package-delete"),
     path('package-new/', views.new_package, name="package-new"),
+    path('package-search/', views.search_packages, name="package-search"),
 
     path('employee', views.employee, name="employee"),
     path('employee-edit/', views.edit_employee, name="employee-edit"),

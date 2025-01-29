@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from elasticsearch_dsl import connections
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,12 +78,12 @@ WSGI_APPLICATION = 'Transport.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'DjangoDB',
         'USER': 'root',
         'PASSWORD': 'my-secret-pw',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'HOST':'db',
+        'PORT':'5432',
     }
 }
 
@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',  # Tên service trong docker-compose.yml
+        'LOCATION': 'redis://redis:6379/1',  # Tên service Redis trong docker-compose.yml
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }

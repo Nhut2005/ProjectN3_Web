@@ -7,8 +7,10 @@ from .models import Customer
 from .models import Employee
 from .forms import PackageNewForm, CustomerNewForm
 from .forms import EmployeeNewForm
+from elasticsearch_dsl import Q
 from django.core.cache import cache 
 from django.views.decorators.cache import cache_page
+from T_package_Mng.document import PackageDocument
 
 # Create your views here.
 @cache_page(60 * 5) # Cache trong 15 phút
@@ -39,6 +41,26 @@ def edit_package(request):
         'package': package,
     }
     return HttpResponse(template.render(context, request))
+
+
+def search_packages(request):
+    query = request.GET.get('q', '')  # Lấy từ khóa tìm kiếm từ URL
+    results = []  # Khởi tạo danh sách kết quả tìm kiếm
+
+    print('---------------------------------------', query)
+
+    if query:  # Nếu có từ khóa tìm kiếm
+        q = Q("multi_match", query=query, fields=["name", "description"])  # Tạo query tìm kiếm
+
+        # Thực hiện tìm kiếm trên Elasticsearch
+        search = PackageDocument.search().query(q)
+        results = search.execute()  # Lấy kết quả tìm kiếm từ Elasticsearch
+
+        print('=========================================================', results)
+
+    return render(request, 'home/package/search_results.html', {'results': results,'query': query })
+
+
 
 def delete_package(request):
     package = Order.objects.filter(id=1).first() 
