@@ -11,7 +11,8 @@ from elasticsearch_dsl import Q
 from django.core.cache import cache 
 from django.views.decorators.cache import cache_page
 from T_package_Mng.document import PackageDocument
-
+from T_package_Mng.document import EmployeeDocument
+from T_package_Mng.document import CustomerDocument
 # Create your views here.
 @cache_page(60 * 5) # Cache trong 15 phút
 def home(request):
@@ -50,7 +51,7 @@ def search_packages(request):
     print('---------------------------------------', query)
 
     if query:  # Nếu có từ khóa tìm kiếm
-        q = Q("multi_match", query=query, fields=["name", "description"])  # Tạo query tìm kiếm
+        q = Q("multi_match", query=query, fields=["name", "note"])  # Tạo query tìm kiếm
 
         # Thực hiện tìm kiếm trên Elasticsearch
         search = PackageDocument.search().query(q)
@@ -121,6 +122,24 @@ def new_employee(request):
         
     }
     return HttpResponse(template.render(context, request))
+
+def search_employees(request):
+    query = request.GET.get('q', '')  # Lấy từ khóa tìm kiếm từ URL
+    results = []  # Khởi tạo danh sách kết quả tìm kiếm
+
+    print('---------------------------------------', query)
+
+    if query:  # Nếu có từ khóa tìm kiếm
+        q = Q("multi_match", query=query, fields=["name"])  # Tạo query tìm kiếm
+
+        # Thực hiện tìm kiếm trên Elasticsearch
+        search = EmployeeDocument.search().query(q)
+        results = search.execute()  # Lấy kết quả tìm kiếm từ Elasticsearch
+
+        print('=========================================================', results)
+
+    return render(request, 'home/employee/search_results.html', {'results': results,'query': query })
+
 #customer
 def customer(request):
     customer = Customer.objects.all()  
@@ -158,3 +177,20 @@ def new_customer(request):
         
     }
     return HttpResponse(template.render(context, request))
+
+def search_customers(request):
+    query = request.GET.get('q', '')  # Lấy từ khóa tìm kiếm từ URL
+    results = []  # Khởi tạo danh sách kết quả tìm kiếm
+
+    print('---------------------------------------', query)
+
+    if query:  # Nếu có từ khóa tìm kiếm
+        q = Q("multi_match", query=query, fields=["name"])  # Tạo query tìm kiếm
+
+        # Thực hiện tìm kiếm trên Elasticsearch
+        search = CustomerDocument.search().query(q)
+        results = search.execute()  # Lấy kết quả tìm kiếm từ Elasticsearch
+
+        print('=========================================================', results)
+
+    return render(request, 'home/customer/search_results.html', {'results': results,'query': query })
