@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
@@ -7,19 +7,35 @@ from .models import Customer
 from .models import Employee
 from .forms import PackageNewForm, CustomerNewForm
 from .forms import EmployeeNewForm
-from elasticsearch_dsl import Q
+from django.contrib.auth import authenticate, login
+from .forms import PackageForm  # Đảm bảo import form
+
 from django.core.cache import cache 
 from django.views.decorators.cache import cache_page
-from T_package_Mng.document import PackageDocument
-from T_package_Mng.document import EmployeeDocument
-from T_package_Mng.document import CustomerDocument
+
 # Create your views here.
 @cache_page(60 * 5) # Cache trong 15 phút
 def home(request):
-    return render(request, 'home/home.html')
+    return render(request, 'home/base.html')
 #package
 def clear_cache(request):
     cache.delete('package') # Xóa cache theo key
+
+
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('account')  # Chuyển hướng đến trang account.html
+        else:
+            return render(request, 'home/login.html', {'error': 'Sai tên đăng nhập hoặc mật khẩu'})
+    
+    return render(request, 'home/login.html')
+
 
 def package(request):
     package = cache.get('package')
@@ -35,31 +51,16 @@ def package(request):
     }
     return HttpResponse(template.render(context, request))
 
-def edit_package(request):
-    package = Order.objects.filter(id=1).first() 
-    template = loader.get_template('home/package/package-edit.html')
-    context = {
-        'package': package,
-    }
-    return HttpResponse(template.render(context, request))
-
-
-def search_packages(request):
-    query = request.GET.get('q', '')  # Lấy từ khóa tìm kiếm từ URL
-    results = []  # Khởi tạo danh sách kết quả tìm kiếm
-
-    print('---------------------------------------', query)
-
-    if query:  # Nếu có từ khóa tìm kiếm
-        q = Q("multi_match", query=query, fields=["name", "note"])  # Tạo query tìm kiếm
-
-        # Thực hiện tìm kiếm trên Elasticsearch
-        search = PackageDocument.search().query(q)
-        results = search.execute()  # Lấy kết quả tìm kiếm từ Elasticsearch
-
-        print('=========================================================', results)
-
-    return render(request, 'home/package/search_results.html', {'results': results,'query': query })
+def create_package(request):
+    if request.method == "POST":
+        form = PackageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('package')  # Chuyển hướng đến danh sách
+    else:  # Đúng: else thụt lề chính xác
+        form = PackageForm()  # Đúng: thụt lề đúng với else
+    
+        return render(request, 'home/package/package-edit.html', {'form': form})
 
 
 
@@ -123,23 +124,6 @@ def new_employee(request):
     }
     return HttpResponse(template.render(context, request))
 
-def search_employees(request):
-    query = request.GET.get('q', '')  # Lấy từ khóa tìm kiếm từ URL
-    results = []  # Khởi tạo danh sách kết quả tìm kiếm
-
-    print('---------------------------------------', query)
-
-    if query:  # Nếu có từ khóa tìm kiếm
-        q = Q("multi_match", query=query, fields=["name"])  # Tạo query tìm kiếm
-
-        # Thực hiện tìm kiếm trên Elasticsearch
-        search = EmployeeDocument.search().query(q)
-        results = search.execute()  # Lấy kết quả tìm kiếm từ Elasticsearch
-
-        print('=========================================================', results)
-
-    return render(request, 'home/employee/search_results.html', {'results': results,'query': query })
-
 #customer
 def customer(request):
     customer = Customer.objects.all()  
@@ -178,19 +162,146 @@ def new_customer(request):
     }
     return HttpResponse(template.render(context, request))
 
-def search_customers(request):
-    query = request.GET.get('q', '')  # Lấy từ khóa tìm kiếm từ URL
-    results = []  # Khởi tạo danh sách kết quả tìm kiếm
+def view_account(request):
+    return render(request, 'home/account.html')
 
-    print('---------------------------------------', query)
+def my_order(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/package/myorders.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
 
-    if query:  # Nếu có từ khóa tìm kiếm
-        q = Q("multi_match", query=query, fields=["name"])  # Tạo query tìm kiếm
+def my_addresses(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/package/address-book.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
 
-        # Thực hiện tìm kiếm trên Elasticsearch
-        search = CustomerDocument.search().query(q)
-        results = search.execute()  # Lấy kết quả tìm kiếm từ Elasticsearch
+def my_voucher(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/package/voucher.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
 
-        print('=========================================================', results)
+def my_setting(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/package/setting.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
 
-    return render(request, 'home/customer/search_results.html', {'results': results,'query': query })
+def my_blog(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/package/blog.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def my_question(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/package/question.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def my_contact(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/package/contact.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def view_manager(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/manager/quanly.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def view_shipmenu(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/manager/don_van_chuyen.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def view_shipprocess(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/manager/shippingprocess.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def view_pricelist(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/manager/banggia.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def view_dashboard(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/manager/baocao.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def view_feedback(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/manager/danhgia.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def view_profile(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/manager/hskh.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def register_user(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/register.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def view_dichvu(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/gioithieu.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+def view_tkprofile(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/profile.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+

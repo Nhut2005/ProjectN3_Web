@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+        }
+        .register-form {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+        .register-form h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .register-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .register-form button {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+        .register-form button:hover {
+            background: #218838;
+        }
+        .register-form p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .register-form a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .register-form a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form class="register-form" onsubmit="return validateForm()">
+        <h2>Đăng ký tài khoản</h2>
+        <input type="text" id="username" placeholder="Tên đăng nhập" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Mật khẩu" required>
+        <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu" required>
+        <p><a href="{% url 'login' %}" class="text-primary">Đăng ký</a></p>
+        
+        <p>Đã có tài khoản?<a href="{% url 'login' %}" class="text-primary">Đăng nhập</a></p>
+    </form>
+
+    <script>
+        function validateForm() {
+            let username = document.getElementById('username').value;
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let confirmPassword = document.getElementById('confirm-password').value;
+            let registerButton = document.getElementById('register-button');
+            
+            if (username && email && password && confirmPassword && password === confirmPassword) {
+                registerButton.disabled = false;
+                return true;
+            } else {
+                registerButton.disabled = true;
+                return false;
+            }
+        }
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', validateForm);
+        });
+    </script>
+</body>
+</html>

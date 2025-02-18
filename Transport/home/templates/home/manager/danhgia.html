@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản Lý Vận Chuyển Cá Cảnh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #343a40;
+            color: white;
+            padding: 15px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 8px;
+            font-size: 14px;
+        }
+        .sidebar a:hover {
+            background: #495057;
+            border-radius: 5px;
+        }
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a class="navbar-brand fw-bold" href="{% url 'manager' %}">Quản lý vận chuyển</a>
+        <a href="#">📦 Đơn vận chuyển</a>
+        <a href="#">🚛 Quá trình vận chuyển</a>
+        <a href="#">💰 Bảng giá dịch vụ</a>
+        <a href="#">📊 Dashboard & Báo cáo</a>
+        <a href="#">⭐ Đánh giá & Phản hồi</a>
+        <a href="#">📝 Hồ sơ khách hàng</a>
+    </div>
+    
+    <div class="content">
+        <h2 class="mb-4">⭐ Đánh Giá & Phản Hồi</h2>
+        <div class="mb-3">
+            <label for="filter-rating" class="form-label">Lọc theo số sao:</label>
+            <select class="form-select w-25" id="filter-rating" onchange="filterReviews()">
+                <option value="all">Tất cả</option>
+                <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+                <option value="4">⭐️⭐️⭐️⭐️</option>
+                <option value="3">⭐️⭐️⭐️</option>
+                <option value="2">⭐️⭐️</option>
+                <option value="1">⭐️</option>
+            </select>
+        </div>
+        
+        <h3>Thống Kê Đánh Giá</h3>
+        <canvas id="ratingChart" width="400" height="200"></canvas>
+        
+        <h3 class="mt-5">Phản Hồi Từ Khách Hàng</h3>
+        <ul class="list-group mt-3" id="review-list">
+            <li class="list-group-item" data-rating="5">⭐️⭐️⭐️⭐️⭐️ - Dịch vụ rất tốt, tôi rất hài lòng! - <strong>Nguyễn Văn A</strong> <button class="btn btn-sm btn-danger float-end" onclick="removeReview(this)">Xóa</button></li>
+            <li class="list-group-item" data-rating="4">⭐️⭐️⭐️⭐️ - Nhân viên nhiệt tình, giao hàng nhanh chóng. - <strong>Trần Thị B</strong> <button class="btn btn-sm btn-danger float-end" onclick="removeReview(this)">Xóa</button></li>
+            <li class="list-group-item" data-rating="3">⭐️⭐️⭐️ - Cần cải thiện thời gian giao hàng. - <strong>Phạm Văn C</strong> <button class="btn btn-sm btn-danger float-end" onclick="removeReview(this)">Xóa</button></li>
+        </ul>
+    </div>
+
+    <script>
+        function filterReviews() {
+            let filter = document.getElementById("filter-rating").value;
+            let reviews = document.querySelectorAll("#review-list li");
+            reviews.forEach(review => {
+                if (filter === "all" || review.getAttribute("data-rating") === filter) {
+                    review.classList.remove("hidden");
+                } else {
+                    review.classList.add("hidden");
+                }
+            });
+        }
+
+        function removeReview(button) {
+            button.parentElement.remove();
+        }
+
+        const ctx = document.getElementById('ratingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['⭐️⭐️⭐️⭐️⭐️', '⭐️⭐️⭐️⭐️', '⭐️⭐️⭐️', '⭐️⭐️', '⭐️'],
+                datasets: [{
+                    label: 'Số lượt đánh giá',
+                    data: [10, 7, 5, 2, 1],
+                    backgroundColor: ['#28a745', '#17a2b8', '#ffc107', '#fd7e14', '#dc3545']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

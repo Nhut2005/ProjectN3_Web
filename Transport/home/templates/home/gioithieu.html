@@ -1,0 +1,416 @@
+{% load static %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+      <style>
+        footer {
+          background: #222;
+          color: #fff;
+          text-align: center;
+          padding: 30px 20px;
+      }
+      
+      .contact {
+          margin-top: 20px;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+      }
+      
+      .contact h3 {
+          font-size: 22px;
+          margin-bottom: 15px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+      }
+      
+      .contact p {
+          margin: 8px 0;
+          font-size: 16px;
+      }
+      
+      .contact a {
+          color: #ffcc00;
+          text-decoration: none;
+          font-weight: bold;
+          transition: color 0.3s ease-in-out;
+      }
+      
+      .contact a:hover {
+          color: #ff6600;
+          text-decoration: underline;
+      }
+      
+      .social-icons {
+          margin-top: 15px;
+      }
+      
+      .social-icons img {
+          width: 35px;
+          margin: 0 8px;
+          transition: transform 0.3s ease-in-out;
+      }
+      
+      .social-icons img:hover {
+          transform: scale(1.3);
+      }
+      
+      /* Form liên hệ */
+      .contact-form {
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+      
+      .contact-form input,
+      .contact-form textarea {
+          width: 100%;
+          max-width: 400px;
+          padding: 10px;
+          margin: 8px 0;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 16px;
+      }
+      
+      .contact-form textarea {
+          height: 100px;
+          resize: none;
+      }
+      
+      .contact-form button {
+          background: #ffcc00;
+          color: #222;
+          border: none;
+          padding: 10px 15px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          border-radius: 5px;
+          transition: background 0.3s ease-in-out;
+      }
+      
+      .contact-form button:hover {
+          background: #ff6600;
+          color: #fff;
+      }
+      /* Định dạng cho nút "Nội dung chính" */
+#toggle-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid #60a5fa; /* Màu xanh nhạt */
+  border-radius: 0.375rem; /* Cạnh bo tròn */
+  background-color: #eff6ff; /* Màu nền xanh nhạt */
+  color: #3b82f6; /* Màu chữ xanh */
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng hover cho nút */
+#toggle-button:hover {
+  background-color: #dbeafe; /* Màu nền thay đổi khi hover */
+}
+
+/* Các phần tử con trong nút */
+#toggle-button svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+/* Biểu tượng bên phải (mũi tên) khi nút được click */
+#toggle-button[aria-expanded="true"] svg:last-child {
+  transform: rotate(90deg); /* Xoay mũi tên khi mở */
+}
+
+/* Định dạng cho nội dung */
+nav {
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #eff6ff;
+  border: 1px solid #60a5fa;
+  border-radius: 0.375rem;
+  margin-top: 1rem;
+  display: none; /* Mặc định ẩn nội dung */
+  font-size: 0.875rem; /* Chữ nhỏ hơn */
+}
+
+/* Nội dung hiển thị khi nút mở */
+#content-panel {
+  display: block;
+}
+
+/* Thêm một số hiệu ứng cho các liên kết */
+nav a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Định dạng cho danh sách */
+ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+
+.head2 {
+  margin-left: 0.625rem; /* Thêm khoảng cách cho các mục */
+  margin-bottom: 0.75rem;
+}
+
+.head3 {
+  margin-left: 1.25rem; /* Lùi các mục con */
+  margin-bottom: 0.75rem;
+}
+.hidden {
+    display: none;
+  }
+  
+  /* Các phần tử khác vẫn giữ nguyên như trước */
+  
+
+      
+    </style>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- css -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <linh href -"{%static 'home/css/home.css' %}" rel = "stylesheet" />
+        <linh href -"{%static 'home/css/main.css' %}" rel = "stylesheet" />
+        <!--js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        <script src="{%static 'home/js/home.js' %}" > </script>
+        <title>KOI TRANSPORT</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+     <!-- Thanh điều hướng -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand" href="#">
+          <img src="{% static 'home/img/koilogo.png' %}" width="100" height="60" />
+      </a>
+
+      <!-- Nút thu gọn menu trên mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Danh sách menu -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <!-- Công ty -->
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Công ty
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Về chúng tôi</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="#">Đối tác và Mạng lưới</a></li>
+                  </ul>
+              </li>
+
+              <!-- Các mục khác -->
+              <li class="nav-item"><a class="nav-link active" href="#">Theo dõi đơn hàng</a></li>
+              <li class="nav-item"><a class="nav-link active" href="#">B2B Catalog</a></li>
+
+              <!-- Tài nguyên -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Tài nguyên
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'blog' %}">
+                            <i class="bi bi-journal-text"></i> Blog</a></li>
+                    <li><a class="dropdown-item" href="{% url 'question' %}">
+                            <i class="bi bi-question-circle"></i> Câu hỏi thường gặp</a></li>
+                </ul>
+            </li>
+
+              <li class="nav-item"><a class="nav-link" href="#">Hỗ trợ</a></li>
+          </ul>
+
+          <!-- Tìm kiếm -->
+          <form class="d-flex me-3" role="search">
+              <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Tìm</button>
+          </form>
+
+          <!-- Ngôn ngữ -->
+          <div class="dropdown me-3">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Tiếng Việt
+              </button>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">English</a></li>
+                  <li><a class="dropdown-item" href="#">日本</a></li>
+              </ul>
+          </div>
+
+          <!-- Nút Đăng nhập & Liên hệ -->
+          <button class="btn btn-outline-primary me-2"
+              onclick="window.location.href='{% url 'login' %}';">Đăng nhập</button>
+          <a href="{% url 'contact' %}" class="btn btn-primary">
+              <i class="bi bi-envelope"></i> Liên hệ
+          </a>
+      </div>
+  </div>
+</nav>
+
+          <!-- main body-->
+          {% block banner_slider  %}
+          
+          <div class="flex justify-center items-center min-h-screen bg-gray-100">
+            <div class="w-full max-w-3xl p-4">
+              <button class="p-2 border-[1px] rounded-lg bg-blue-100 text-blue-400 w-full flex justify-between items-center scroll-smooth snap-mandatory" id="toggle-button" type="button" aria-expanded="true" data-headlessui-state="open" aria-controls="content-panel">
+                <div class="flex items-center space-x-2">
+                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list" class="svg-inline--fa fa-list" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16">
+                    <path fill="currentColor" d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3-32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3-32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"></path>
+                  </svg>
+                  <span class="text-sm">Nội dung chính</span>
+                </div>
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" class="svg-inline--fa fa-chevron-right transition duration-200 rotate-90" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="16" height="16">
+                  <path fill="currentColor" d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path>
+                </svg>
+              </button>
+        
+              <!-- Nội dung sẽ ẩn đi khi class "hidden" được thêm vào -->
+              <nav class="rounded-lg border-blue-400 bg-blue-100 pl-4 pr-2 py-2 lg:p-4 my-2 text-sm hidden" id="content-panel">
+                <ul>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-1" class="hover:underline">Cá Koi và các đặc tính sinh học</a>
+                    <ul>
+                      <li class="head3 ml-[20px] mb-3 text-blue-400">
+                        <a href="#h3-2" class="hover:underline">Cá Koi là gì?</a>
+                      </li>
+                      <li class="head3 ml-[20px] mb-3 text-blue-400">
+                        <a href="#h3-3" class="hover:underline">Đặc điểm sinh học của cá Koi</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-4" class="hover:underline">Quy trình vận chuyển cá Koi Nhật</a>
+                  </li>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-5" class="hover:underline">Các lưu ý khi vận chuyển cá Koi từ Nhật về Việt Nam</a>
+                    <ul>
+                      <li class="head3 ml-[20px] mb-3 text-blue-400">
+                        <a href="#h3-6" class="hover:underline">Cách đóng gói cá Koi</a>
+                      </li>
+                      <li class="head3 ml-[20px] mb-3 text-blue-400">
+                        <a href="#h3-7" class="hover:underline">Quy tắc bảo quản cá Koi trong quá trình vận chuyển</a>
+                      </li>
+                      <li class="head3 ml-[20px] mb-3 text-blue-400">
+                        <a href="#h3-8" class="hover:underline">Thủ tục hải quan khi vận chuyển cá Koi</a>
+                      </li>
+                      <li class="head3 ml-[20px] mb-3 text-blue-400">
+                        <a href="#h3-9" class="hover:underline">Chăm sóc sau vận chuyển</a>
+                      </li>
+                      <li class="head3 ml-[20px] mb-3 text-blue-400">
+                        <a href="#h3-10" class="hover:underline">Các rủi ro có thể gặp phải</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-11" class="hover:underline">Phương thức vận chuyển cá Koi Nhật an toàn và hiệu quả</a>
+                  </li>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-12" class="hover:underline">Giá cước dịch vụ vận chuyển cá Koi Nhật</a>
+                  </li>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-13" class="hover:underline">Thời gian nhận hàng khi sử dụng dịch vụ vận chuyển cá Koi Nhật</a>
+                  </li>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-14" class="hover:underline">Thời gian nhận hàng khi sử dụng dịch vụ vận chuyển cá Koi Nhật Bản phụ thuộc vào phương thức vận chuyển và địa điểm giao hàng</a>
+                  </li>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-15" class="hover:underline">Tại sao nên sử dụng dịch vụ vận chuyển cá Koi Nhật chuyên nghiệp</a>
+                  </li>
+                  <li class="head2 ml-[10px] mb-3 text-blue-400">
+                    <a href="#h2-16" class="hover:underline">Ezbuy Japan - Đơn vị cung cấp dịch vụ vận chuyển cá Koi Nhật nhanh chóng, an toàn và uy tín</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+      
+          <script>
+            // Lấy nút và phần nội dung
+const toggleButton = document.getElementById('toggle-button');
+const contentPanel = document.getElementById('content-panel');
+
+// Lắng nghe sự kiện click vào nút
+toggleButton.addEventListener('click', function() {
+  // Đổi trạng thái aria-expanded
+  const expanded = toggleButton.getAttribute('aria-expanded') === 'true';
+  toggleButton.setAttribute('aria-expanded', !expanded);
+  
+  // Thêm hoặc xóa class "hidden" để ẩn/hiện nội dung
+  if (expanded) {
+    contentPanel.classList.add('hidden');
+  } else {
+    contentPanel.classList.remove('hidden');
+  }
+});
+
+
+          
+          
+          
+        
+          
+          {% endblock banner_slider %}
+           {% block main-content  %}{% endblock main-content %}
+
+           
+           <!-- footer -->
+           {% comment %} <footer>
+            <p>&copy; 2025 Hệ Thống Vận Chuyển Cá Koi. All rights reserved.</p>
+            
+            <div class="contact">
+                <h3>Liên hệ với chúng tôi</h3>
+                <p>Email: <a href="mailto:contact@koitransport.com">contact@koitransport.com</a></p>
+                <p>Hotline: <a href="tel:18001234">1800-1234</a></p>
+                <p>Địa chỉ: 123 Đường Vận Tải, TP. Hồ Chí Minh</p>
+        
+                <div class="social-icons">
+                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook"></a>
+                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+                </div>
+        
+                <form class="contact-form">
+                    <input type="text" placeholder="Họ và tên" required>
+                    <input type="email" placeholder="Email" required>
+                    <textarea placeholder="Tin nhắn của bạn" required></textarea>
+                    <button type="submit">Gửi tin nhắn</button>
+                </form>
+            </div>
+        </footer> {% endcomment %}
+        
+        
+        <script src="" async defer></script>
+    </body>
+</html>

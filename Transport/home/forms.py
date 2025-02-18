@@ -1,5 +1,6 @@
 from django import forms
 
+from .models import Package
 class PackageNewForm(forms.Form): 
     name = forms.CharField(label="name", max_length=100)
     size = forms.CharField(label="size", max_length=100)
@@ -26,3 +27,13 @@ class EmployeeNewForm(forms.Form):
     phone = forms.CharField(label="phone", max_length=100)
     Role = forms.CharField(label="Role")  
     active = forms.BooleanField(label="active")
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=150)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+
+
+class PackageForm(forms.ModelForm):
+    class Meta:
+        model = Package
+        fields = ['name', 'description', 'price']

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .sidebar ul li:hover, .sidebar ul li.active {
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        .settings-container {
+            flex: 1;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .radio-group label {
+            display: inline;
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-save {
+            background: navy;
+            color: white;
+        }
+        .btn-delete {
+            background: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <a class="navbar-brand fw-bold" href="/" style="cursor: pointer; text-decoration: none;">
+        KOITRANSPORT
+    </a>
+    <aside class="sidebar">
+        <h2>Settings</h2>
+        <ul>
+            <li class="active"><i class="fa fa-user"></i> Profile</li>
+            <li><i class="fa fa-lock"></i> Password</li>
+            <li><i class="fa fa-link"></i> Connect Accounts</li>
+            <li><i class="fa fa-bell"></i> Notification</li>
+            <li><i class="fa fa-globe"></i> Country & Language</li>
+            <li><i class="fa fa-file"></i> Privacy Policy</li>
+        </ul>
+    </aside>
+    <section class="settings-container">
+        <h2>Profile</h2>
+        <div class="profile-pic">
+            <i class="fa fa-user"></i>
+        </div>
+        <form>
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" value="Nhựt Nguyễn">
+            </div>
+            <div class="form-group">
+                <label>Country</label>
+                <select>
+                    <option>Viet Nam</option>
+                    <option>USA</option>
+                    <option>UK</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Birthday</label>
+                <input type="date">
+            </div>
+            <div class="form-group radio-group">
+                <label>Gender</label>
+                <input type="radio" name="gender"> Male
+                <input type="radio" name="gender"> Female
+                <input type="radio" name="gender" checked> Other
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" placeholder="Add new">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" value="nguyenthanhnhut9991@gmail.com">
+            </div>
+            <button class="btn btn-delete">Delete Account</button>
+           
+            <button type="button" class="btn btn-save" onclick="window.location.href='{% url 'account' %}'">Save</button>
+
+           
+        </form>
+    </section>
+</body>
+</html>
