@@ -189,18 +189,12 @@
                 padding: 20px;
                 border-radius: 10px;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                max-width: 800px;
+                max-width: 900px;
                 margin: auto;
             }
-            .order-item {
-                font-size: 0.9rem;
-                font-weight: 500;
-                padding: 8px;
-                background: #e9ecef;
-                border-radius: 5px;
-            }
-            .order-list {
-                margin-top: 20px;
+            .table th, .table td {
+                vertical-align: middle;
+                text-align: center;
             }
         </style>
     </head>
@@ -208,9 +202,9 @@
         <div class="container mt-4">
             <div class="order-container">
                 <h2 class="text-center mb-4">Thông Tin Đơn Hàng</h2>
-                <div class="order-list" id="orderList"></div>
+                <div id="orderList"></div>
                 <div class="text-center mt-4">
-                    <a href="{% url 'create_package' %}" class="btn btn-primary">
+                    <a href="index.html" class="btn btn-primary">
                         <i class="bi bi-box-seam"></i> Quay lại sửa đổi
                     </a>
                     <button class="btn btn-danger ml-2" onclick="deleteAllOrders()">
@@ -219,73 +213,83 @@
                 </div>
             </div>
         </div>
-        <script>
-            function generateInvoiceCode() {
-                let orderCount = localStorage.getItem('orderCount') || 0;  // Lấy số lượng đơn hàng đã lưu trong localStorage, nếu không có thì mặc định là 0
-                orderCount = parseInt(orderCount) + 1;  // Tăng số đơn hàng lên 1
-            
-                // Lưu số lượng đơn hàng đã tăng lên vào localStorage để sử dụng cho lần tạo mã sau
-                localStorage.setItem('orderCount', orderCount);
-            
-                return 'HD' + String(orderCount).padStart(4, '0');  // Tạo mã đơn hàng theo định dạng 'HD0001', 'HD0002',...
-            }
-            
     
+        <script>
             function deleteOrder(invoiceCode) {
                 if (confirm("Bạn có chắc chắn muốn xóa đơn hàng này?")) {
                     let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
                     orderHistory = orderHistory.filter(order => order.invoiceCode !== invoiceCode);
                     localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
-                    displayOrders();  // Cập nhật lại danh sách đơn hàng
+                    displayOrders();
                 }
             }
     
             function deleteAllOrders() {
                 if (confirm("Bạn có chắc chắn muốn xóa tất cả đơn hàng?")) {
                     localStorage.removeItem("orderHistory");
-                    displayOrders();  // Cập nhật lại danh sách đơn hàng
+                    localStorage.setItem("orderCount", 0); // Reset số lượng đơn hàng
+                    displayOrders();
                 }
             }
-    
-           
     
             function displayOrders() {
                 let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
                 const orderList = document.getElementById("orderList");
-            
+    
                 if (orderHistory.length === 0) {
                     orderList.innerHTML = "<p class='text-danger text-center'>Không có đơn hàng nào.</p>";
                 } else {
-                    orderList.innerHTML = "";
+                    let tableContent = `
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Mã Hóa Đơn</th>
+                                    <th>Người Đặt</th>
+                                    <th>SĐT</th>
+                                    <th>Cá Koi</th>
+                                    <th>Số Lượng</th>
+                                    <th>Vận Chuyển</th>
+                                    <th>Xuất Phát</th>
+                                    <th>Điểm Đến</th>
+                                    <th>Dịch Vụ</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+    
                     orderHistory.forEach(order => {
-                        const orderElement = document.createElement("div");
-                        orderElement.classList.add("order-item");
-                        orderElement.innerHTML = `
-            <strong>Mã Hóa Đơn:</strong> ${order.invoiceCode} <br>
-            <strong>Tên cá koi:</strong> ${order.fishName} <br>
-            <strong>Khối lượng/Số lượng:</strong> ${order.quantity} <br>
-            <strong>Phương thức vận chuyển:</strong> ${order.transportMethod} <br>
-            <strong>Địa điểm xuất phát:</strong> ${order.origin} <br>
-            <strong>Địa điểm đến:</strong> ${order.destination} <br>
-            <strong>Dịch vụ gia tăng:</strong> ${order.additionalServices.join(", ")} <br>
-            <strong>Trạng thái đơn hàng:</strong> ${order.status || "Chưa xác định"} <br>
-            <button class="btn btn-danger mt-2" onclick="deleteOrder('${order.invoiceCode}')">
-                Xóa
-            </button>
-           
-        `;
-
-                        orderList.appendChild(orderElement);
+                        tableContent += `
+                            <tr>
+                                <td>${order.invoiceCode}</td>
+                                <td>${order.customerName}</td>
+                                <td>${order.customerPhone}</td>
+                                <td>${order.fishName}</td>
+                                <td>${order.quantity}</td>
+                                <td>${order.transportMethod}</td>
+                                <td>${order.origin}</td>
+                                <td>${order.destination}</td>
+                                <td>${order.additionalServices.length ? order.additionalServices.join(", ") : "Không"}</td>
+                                <td>${order.status || "Đang xử lý"}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteOrder('${order.invoiceCode}')">
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
                     });
+    
+                    tableContent += `</tbody></table>`;
+                    orderList.innerHTML = tableContent;
                 }
             }
-            
     
             window.onload = function() {
-                displayOrders();  // Hiển thị danh sách đơn hàng khi tải trang
+                displayOrders();
             };
         </script>
     </body>
     </html>
-    
     

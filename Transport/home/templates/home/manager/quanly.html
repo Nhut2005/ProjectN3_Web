@@ -79,8 +79,79 @@
     </div>
 
     <!-- Danh sách đơn hàng mới nhất -->
-    <h3 class="mt-4">📝 Đơn hàng mới nhất</h3>
+    <script>
+        function displayOrderInfo() {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            let orderTableBody = document.getElementById("orderTableBody");
+            orderTableBody.innerHTML = "";
+        
+            orderHistory.forEach((order, index) => {
+                let statusBadge = "<span class='badge bg-warning'>Đang xử lý</span>";
+                if (order.status === "Đang giao") {
+                    statusBadge = "<span class='badge bg-primary'>Đang giao</span>";
+                } else if (order.status === "Hoàn thành") {
+                    statusBadge = "<span class='badge bg-success'>Hoàn thành</span>";
+                }
+        
+                let orderDate = order.date ? new Date(order.date).toLocaleDateString() : new Date().toLocaleDateString();
+        
+                let row = `<tr>
+                    <td>${order.invoiceCode}</td>
+                    <td>${order.customerName || "Khách hàng"}</td>
+                    <td>${orderDate}</td>
+                    <td id="status-${index}">${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-outline-info btn-sm" onclick="showOrderDetails(${index})">ℹ️ Chi tiết</button>
+                    </td>
+                </tr>`;
+                orderTableBody.innerHTML += row;
+            });
+        }
+        
+        function updateOrderStatus(index) {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            if (orderHistory[index]) {
+                if (!orderHistory[index].status || orderHistory[index].status === "processing") {
+                    orderHistory[index].status = "Đang giao";
+                } else if (orderHistory[index].status === "Đang giao") {
+                    orderHistory[index].status = "Hoàn thành";
+                }
+            }
+            localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
+            displayOrderInfo();
+        }
+        
+        function showOrderDetails(index) {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            let order = orderHistory[index];
+        
+            if (order) {
+                let orderDetailsHTML = `
+                    <p><strong>Mã đơn:</strong> ${order.invoiceCode}</p>
+                    <p><strong>Khách hàng:</strong> ${order.customerName || "Không có thông tin"}</p>
+                    <p><strong>Số điện thoại:</strong> ${order.customerPhone || "Không có thông tin"}</p>
+                    <p><strong>Cá koi:</strong> ${order.fishName || "Không có thông tin"}</p>
+                    <p><strong>Số lượng:</strong> ${order.quantity || "Không có thông tin"}</p>
+                    <p><strong>Phương thức vận chuyển:</strong> ${order.transportMethod || "Không có thông tin"}</p>
+                    <p><strong>Địa điểm xuất phát:</strong> ${order.origin || "Không có thông tin"}</p>
+                    <p><strong>Địa điểm đến:</strong> ${order.destination || "Không có thông tin"}</p>
+                    <p><strong>Dịch vụ gia tăng:</strong> ${order.additionalServices.length ? order.additionalServices.join(", ") : "Không"}</p>
+                    <p><strong>Trạng thái:</strong> ${order.status === "Đang giao" ? "Đang giao" : (order.status === "Hoàn thành" ? "Hoàn thành" : "Đang xử lý")}</p>
+                `;
+                document.getElementById("orderDetailBody").innerHTML = orderDetailsHTML;
+                new bootstrap.Modal(document.getElementById("orderDetailModal")).show();
+            }
+        }
+        
+        
+        window.onload = function() {
+            displayOrderInfo();
+        };
+        
+    </script>
+    
     <div class="table-responsive">
+        <h3 class="mt-4">📝 Đơn hàng mới nhất</h3>
         <table class="table table-hover mt-3">
             <thead class="table-dark">
                 <tr>
@@ -91,31 +162,28 @@
                     <th>Chi tiết</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>#00123</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>12/02/2025</td>
-                    <td><span class="badge bg-warning">Đang giao</span></td>
-                    <td><button class="btn btn-outline-primary btn-sm">🔍</button></td>
-                </tr>
-                <tr>
-                    <td>#00124</td>
-                    <td>Trần Thị B</td>
-                    <td>13/02/2025</td>
-                    <td><span class="badge bg-success">Hoàn thành</span></td>
-                    <td><button class="btn btn-outline-primary btn-sm">🔍</button></td>
-                </tr>
-                <tr>
-                    <td>#00125</td>
-                    <td>Phạm Văn C</td>
-                    <td>14/02/2025</td>
-                    <td><span class="badge bg-danger">Hủy</span></td>
-                    <td><button class="btn btn-outline-primary btn-sm">🔍</button></td>
-                </tr>
+            <tbody id="orderTableBody">
             </tbody>
         </table>
     </div>
+    <!-- Modal hiển thị thông tin đơn hàng -->
+<div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderDetailModalLabel">Chi Tiết Đơn Hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="orderDetailBody">
+                <!-- Nội dung chi tiết đơn hàng sẽ được cập nhật bằng JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    
+    
 
     <!-- Biểu đồ thống kê -->
     <div class="row mt-4">

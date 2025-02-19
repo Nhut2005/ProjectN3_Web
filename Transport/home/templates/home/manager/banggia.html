@@ -31,6 +31,20 @@
             margin-left: 240px;
             padding: 20px;
         }
+        .btn-edit, .btn-save {
+            margin-top: 10px;
+        }
+        .btn-edit {
+            background-color: #ffc107;
+            color: white;
+        }
+        .btn-save {
+            background-color: #28a745;
+            color: white;
+        }
+        .form-control {
+            width: 150px;
+        }
     </style>
 </head>
 <body>
@@ -46,46 +60,107 @@
     </div>
     
     <!-- Nội dung chính -->
-    <div class="content">
-        <h2 class="mb-4">💰 Bảng Giá Dịch Vụ Vận Chuyển</h2>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Loại Dịch Vụ</th>
-                        <th>Khoảng Cách</th>
-                        <th>Thời Gian Giao</th>
-                        <th>Giá (VND)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Giao hàng tiêu chuẩn</td>
-                        <td>Dưới 50km</td>
-                        <td>2 - 3 ngày</td>
-                        <td>50,000</td>
-                    </tr>
-                    <tr>
-                        <td>Giao hàng nhanh</td>
-                        <td>Dưới 50km</td>
-                        <td>24 giờ</td>
-                        <td>80,000</td>
-                    </tr>
-                    <tr>
-                        <td>Vận chuyển quốc tế</td>
-                        <td>Ngoài nước</td>
-                        <td>5 - 7 ngày</td>
-                        <td>500,000</td>
-                    </tr>
-                    <tr>
-                        <td>Vận chuyển cá cảnh</td>
-                        <td>Nội địa</td>
-                        <td>3 - 5 ngày</td>
-                        <td>100,000</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bảng Giá Dịch Vụ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">💰 Bảng Giá Dịch Vụ Vận Chuyển</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" id="serviceTable">
+            <thead class="table-dark">
+                <tr>
+                    <th>Loại Dịch Vụ</th>
+                    <th>Khoảng Cách</th>
+                    <th>Thời Gian Giao</th>
+                    <th>Giá (VND)</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="serviceTableBody"></tbody>
+        </table>
     </div>
+</div>
+
+<script>
+    const defaultData = [
+        { type: "Giao hàng tiêu chuẩn", distance: "Dưới 50km", time: "2 - 3 ngày", price: 50000 },
+        { type: "Giao hàng nhanh", distance: "Dưới 50km", time: "24 giờ", price: 80000 },
+        { type: "Vận chuyển quốc tế", distance: "Ngoài nước", time: "5 - 7 ngày", price: 500000 },
+        { type: "Vận chuyển cá cảnh", distance: "Nội địa", time: "3 - 5 ngày", price: 100000 }
+    ];
+
+    function loadTable() {
+        let data = JSON.parse(localStorage.getItem("serviceData")) || defaultData;
+        let tbody = document.getElementById("serviceTableBody");
+        tbody.innerHTML = "";
+        data.forEach((item, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${item.type}</td>
+                    <td><input type="text" class="form-control" value="${item.distance}" disabled></td>
+                    <td><input type="text" class="form-control" value="${item.time}" disabled></td>
+                    <td><input type="number" class="form-control" value="${item.price}" disabled></td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editRow(this)">Sửa</button>
+                        <button class="btn btn-success btn-sm" onclick="saveChanges(${index}, this)" style="display:none">Lưu</button>
+                    </td>
+                </tr>`;
+        });
+        updateUpdatedTable(data);
+    }
+
+    function editRow(button) {
+        let row = button.closest("tr");
+        row.querySelectorAll("input").forEach(input => input.disabled = false);
+        row.querySelector(".btn-warning").style.display = "none";
+        row.querySelector(".btn-success").style.display = "inline-block";
+    }
+
+    function saveChanges(index, button) {
+        let row = button.closest("tr");
+        let inputs = row.querySelectorAll("input");
+        let updatedData = {
+            type: row.cells[0].innerText,
+            distance: inputs[0].value,
+            time: inputs[1].value,
+            price: parseInt(inputs[2].value)
+        };
+    
+        let data = JSON.parse(localStorage.getItem("serviceData")) || defaultData;
+        data[index] = updatedData;
+        localStorage.setItem("serviceData", JSON.stringify(data));
+    
+        // 🔥 Kích hoạt sự kiện storage
+        localStorage.setItem("dataUpdated", Date.now());
+    
+        loadTable();
+        alert("Dữ liệu đã được cập nhật!");
+    }
+    
+
+    function updateUpdatedTable(data) {
+        let tbody = document.getElementById("updatedTableBody");
+        tbody.innerHTML = "";
+        data.forEach(item => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${item.type}</td>
+                    <td>${item.distance}</td>
+                    <td>${item.time}</td>
+                    <td>${item.price.toLocaleString()} VND</td>
+                </tr>`;
+        });
+    }
+
+    window.onload = loadTable;
+</script>
 </body>
 </html>
+

@@ -46,6 +46,7 @@ urlpatterns = [
 
     path('dich-vu-van-chuyen-ca-koi-nhat', views.view_dichvu, name='vanchuyenca'),
     path('profile', views.view_tkprofile, name='profile'),
+    path('bang-gia', views.price_list, name='bang-gia'),
 
  
 

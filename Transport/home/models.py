@@ -14,3 +14,15 @@ class Package(models.Model):
 
     def __str__(self):
         return self.name
+    
+# models.py
+from django.db import models
+
+class ServicePrice(models.Model):
+    service_type = models.CharField(max_length=100)
+    distance = models.CharField(max_length=100)
+    delivery_time = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.service_type

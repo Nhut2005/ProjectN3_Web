@@ -46,33 +46,172 @@
     </div>
     
     <!-- Nội dung chính -->
-    <div class="content">
-        <h2 class="mb-4">🚛 Quá Trình Vận Chuyển</h2>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>Mã Đơn Hàng</th>
-                        <th>Khách Hàng</th>
-                        <th>Ngày Đặt</th>
-                        <th>Trạng Thái</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>#12345</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>12/02/2025</td>
-                        <td class="text-warning">Đang Vận Chuyển</td>
-                    </tr>
-                    <tr>
-                        <td>#12346</td>
-                        <td>Trần Thị B</td>
-                        <td>13/02/2025</td>
-                        <td class="text-success">Đã Giao Hàng</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản Lý Vận Chuyển</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table th {
+            background: #007bff;
+            color: white;
+            text-align: center;
+        }
+        .table td {
+            text-align: center;
+            font-weight: 500;
+            color: black; /* Đảm bảo màu chữ đen */
+        }
+        .badge {
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            color: black; /* Màu chữ đen */
+        }
+        .badge-warning {
+            background-color: #ffd700; /* Màu vàng */
+        }
+        .badge-primary {
+            background-color: #17a2b8; /* Màu xanh dương */
+        }
+        .badge-success {
+            background-color: #28a745; /* Màu xanh lá */
+        }
+        .btn-update {
+            border: none;
+            background: transparent;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-update:hover {
+            color: #007bff;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function displayOrderInfo() {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            let orderTableBody = document.getElementById("orderTableBody");
+            orderTableBody.innerHTML = "";
+        
+            orderHistory.forEach((order, index) => {
+                let statusBadge = "<span class='badge bg-warning'>Đang xử lý</span>";
+                if (order.status === "Đang giao") {
+                    statusBadge = "<span class='badge bg-primary'>Đang giao</span>";
+                } else if (order.status === "Hoàn thành") {
+                    statusBadge = "<span class='badge bg-success'>Hoàn thành</span>";
+                }
+        
+                let orderDate = order.date ? new Date(order.date).toLocaleDateString() : new Date().toLocaleDateString();
+        
+                let row = `<tr>
+                    <td>${order.invoiceCode}</td>
+                    <td>${order.customerName || "Khách hàng"}</td>
+                    <td>${orderDate}</td>
+                    <td id="status-${index}">${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-outline-info btn-sm" onclick="showOrderDetails(${index})">ℹ️ Chi tiết</button>
+                    </td>
+                </tr>`;
+                orderTableBody.innerHTML += row;
+            });
+        }
+        
+        function updateOrderStatus(index) {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            if (orderHistory[index]) {
+                if (!orderHistory[index].status || orderHistory[index].status === "Đang Xử Lý") {
+                    orderHistory[index].status = "Đang Giao Hàng";
+                } else if (orderHistory[index].status === "Đang Giao Hàng") {
+                    orderHistory[index].status = "Hoàn Thành";
+                }
+            }
+            localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
+            displayOrderInfo();
+        }
+        
+        function showOrderDetails(index) {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            let order = orderHistory[index];
+        
+            if (order) {
+                let orderDetailsHTML = `
+                    <p><strong>Mã đơn:</strong> ${order.invoiceCode}</p>
+                    <p><strong>Khách hàng:</strong> ${order.customerName || "Không có thông tin"}</p>
+                    <p><strong>Số điện thoại:</strong> ${order.customerPhone || "Không có thông tin"}</p>
+                    <p><strong>Cá koi:</strong> ${order.fishName || "Không có thông tin"}</p>
+                    <p><strong>Số lượng:</strong> ${order.quantity || "Không có thông tin"}</p>
+                    <p><strong>Phương thức vận chuyển:</strong> ${order.transportMethod || "Không có thông tin"}</p>
+                    <p><strong>Địa điểm xuất phát:</strong> ${order.origin || "Không có thông tin"}</p>
+                    <p><strong>Địa điểm đến:</strong> ${order.destination || "Không có thông tin"}</p>
+                    <p><strong>Dịch vụ gia tăng:</strong> ${order.additionalServices.length ? order.additionalServices.join(", ") : "Không"}</p>
+                    <p><strong>Trạng thái:</strong> ${order.status === "Đang Giao Hàng" ? "Đang Giao Hàng" : (order.status === "Hoàn Thành" ? "Hoàn Thành" : "Đang Xử Lý")}</p>
+                `;
+                document.getElementById("orderDetailBody").innerHTML = orderDetailsHTML;
+                new bootstrap.Modal(document.getElementById("orderDetailModal")).show();
+            }
+        }
+        
+        window.onload = function() {
+            displayOrderInfo();
+        };
+    </script>
+    
+    <div class="container">
+        <h3 class="mt-4">📝 Đơn hàng mới nhất</h3>
+        <table class="table table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày tạo</th>
+                    <th>Trạng thái</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal hiển thị thông tin đơn hàng -->
+    <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailModalLabel">Chi Tiết Đơn Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="orderDetailBody">
+                </div>
+            </div>
         </div>
     </div>
 </body>

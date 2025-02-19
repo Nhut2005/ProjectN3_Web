@@ -28,9 +28,29 @@
             border-radius: 5px;
         }
         .content {
-            margin-left: 270px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 900px;
             padding: 20px;
         }
+        .container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin-left: 250px; /* Tránh bị sidebar che */
+        }
+        .content {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        
+        
     </style>
 </head>
 <body>
@@ -46,39 +66,70 @@
     </div>
     
     <!-- Nội dung chính -->
-    <div class="content">
-        <h2 class="mb-4">Đơn vận chuyển</h2>
+    <script>
+        function displayOrderInfo() {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            let orderTableBody = document.getElementById("orderTableBody");
+            orderTableBody.innerHTML = "";
+    
+            orderHistory.forEach((order, index) => {
+                let statusBadge = "<span class='badge bg-warning'>Đang xử lý</span>";
+                if (order.status === "Đang giao") {
+                    statusBadge = "<span class='badge bg-primary'>Đang giao</span>";
+                } else if (order.status === "Hoàn thành") {
+                    statusBadge = "<span class='badge bg-success'>Hoàn thành</span>";
+                }
+    
+                let orderDate = order.date ? new Date(order.date).toLocaleDateString() : new Date().toLocaleDateString();
+    
+                let row = `<tr>
+                    <td>${order.invoiceCode}</td>
+                    <td>${order.customerName || "Khách hàng"}</td>
+                    <td>${orderDate}</td>
+                    <td id="status-${index}">${statusBadge}</td>
+                    <td><button class="btn btn-outline-primary btn-sm" onclick="updateOrderStatus(${index})">🔄 Cập nhật</button></td>
+                </tr>`;
+                orderTableBody.innerHTML += row;
+            });
+        }
+    
+        function updateOrderStatus(index) {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            if (orderHistory[index]) {
+                if (!orderHistory[index].status || orderHistory[index].status === "processing") {
+                    orderHistory[index].status = "Đang giao";
+                } else if (orderHistory[index].status === "Đang giao") {
+                    orderHistory[index].status = "Hoàn thành";
+                }
+            }
+            localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
+            displayOrderInfo();
+        }
         
-        <table class="table table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>Mã Đơn</th>
-                    <th>Khách Hàng</th>
-                    <th>Ngày Đặt</th>
-                    <th>Trạng Thái</th>
-                    <th>Tổng Chi Phí</th>
-                    <th>Hành Động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>#12345</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>14/02/2025</td>
-                    <td><span class="badge bg-warning">Đang xử lý</span></td>
-                    <td>5,000,000 VND</td>
-                    <td><button class="btn btn-sm btn-primary">Chi tiết</button></td>
-                </tr>
-                <tr>
-                    <td>#12346</td>
-                    <td>Trần Thị B</td>
-                    <td>13/02/2025</td>
-                    <td><span class="badge bg-success">Hoàn thành</span></td>
-                    <td>3,200,000 VND</td>
-                    <td><button class="btn btn-sm btn-primary">Chi tiết</button></td>
-                </tr>
-            </tbody>
-        </table>
+        window.onload = function() {
+            displayOrderInfo();
+        };
+    </script>
+    
+    <div class="container-wrapper">
+    <div class="content">
+        <div class="table-responsive">
+            <h3 class="mt-4">📝 Đơn hàng mới nhất</h3>
+            <table class="table table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày tạo</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                </thead>
+                <tbody id="orderTableBody"></tbody>
+            </table>
+        </div>
     </div>
+</div>
+
 </body>
 </html>

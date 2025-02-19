@@ -9,6 +9,7 @@ from .forms import PackageNewForm, CustomerNewForm
 from .forms import EmployeeNewForm
 from django.contrib.auth import authenticate, login
 from .forms import PackageForm  # Đảm bảo import form
+from .models import ServicePrice
 
 from django.core.cache import cache 
 from django.views.decorators.cache import cache_page
@@ -302,6 +303,16 @@ def view_tkprofile(request):
         'package': package,
     }
     return HttpResponse(template.render(context, request))
+
+
+# views.py
+from django.shortcuts import render, redirect
+from .models import ServicePrice
+
+def price_list(request):
+    prices = ServicePrice.objects.all()  # Lấy tất cả dữ liệu từ model
+    return render(request, 'home/pricePage.html', {'prices': prices})
+
 
 
 
