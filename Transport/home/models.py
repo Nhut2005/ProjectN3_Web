@@ -2,7 +2,7 @@ from django.db import models
 from T_package_Mng.models import Employee
 from T_package_Mng.models import Customer
 from T_package_Mng.models import Order
-from django.db import models
+
 
 # Create your models here.
 
@@ -26,3 +26,8 @@ class ServicePrice(models.Model):
 
     def __str__(self):
         return self.service_type
+    
+
+
+
+

@@ -80,10 +80,14 @@
                     <small class="text-muted">Dung lượng tối đa 1 MB. Định dạng: .JPEG, .PNG</small>
                 </div>
                 <div class="col-md-8">
+                    {% if user.is_authenticated %}
                     <div class="mb-3">
                         <label for="username" class="form-label">Tên đăng nhập</label>
-                        <input type="text" class="form-control" id="username" value="nhut" disabled>
+                        <input type="text" class="form-control" id="username" value="{{ user.username }}" disabled>
                     </div>
+                {% endif %}
+                
+                
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" value="ng*************@gmail.com" readonly>

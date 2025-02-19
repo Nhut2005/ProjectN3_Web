@@ -145,9 +145,14 @@
 
             <!-- Thông tin người dùng -->
             <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle"></i> Nhựt Nguyễn
+                <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    
+                    <span>{{ user.username }}</span>
                 </button>
+                
+                
+                
+                
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a href="{% url 'profile' %}" class="dropdown-item">
                         <i class="bi bi-box-seam"></i> Profile</a>

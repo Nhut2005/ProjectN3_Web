@@ -147,17 +147,9 @@
       <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <!-- Công ty -->
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      Công ty
-                  </a>
-                  <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Về chúng tôi</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Đối tác và Mạng lưới</a></li>
-                  </ul>
-              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'cong-ty' %}">Công ty</a>
+            </li>
 
               <!-- Các mục khác -->
             <!-- Bảng giá vận chuyển -->
@@ -165,10 +157,7 @@
                 <a class="nav-link active" href="{% url 'bang-gia' %}">Bảng giá vận chuyển</a>
             </li>
 
-            <!-- B2B Catalog -->
-            <li class="nav-item">
-                <a class="nav-link active" href="#">B2B Catalog</a>
-            </li>
+          
 
               <!-- Tài nguyên -->
               <li class="nav-item dropdown">
@@ -183,7 +172,7 @@
                 </ul>
             </li>
 
-              <li class="nav-item"><a class="nav-link" href="#">Hỗ trợ</a></li>
+            
           </ul>
 
           <!-- Tìm kiếm -->
@@ -206,55 +195,315 @@
 
           <!-- Nút Đăng nhập & Liên hệ -->
           <button class="btn btn-outline-primary me-2"
-              onclick="window.location.href='{% url 'login' %}';">Đăng nhập</button>
+              onclick="window.location.href='{% url 'login_user' %}';">Đăng nhập</button>
           <a href="{% url 'contact' %}" class="btn btn-primary">
               <i class="bi bi-envelope"></i> Liên hệ
           </a>
       </div>
   </div>
 </nav>
-
+<div id="carouselExampleDark" class="carousel carousel-dark slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="10000">
+      <img src="{% static 'home/img/ca1.jpg' %}" class="d-block mx-auto" alt="..." style="max-height: 300px; width: 50%; object-fit: cover;">
+      <div class="carousel-caption d-none d-md-block">
+        <!-- Optional caption content here -->
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="2000">
+      <img src="{% static 'home/img/ca2.jpg' %}" class="d-block mx-auto" alt="..." style="max-height: 300px; width: 50%; object-fit: cover;">
+      <div class="carousel-caption d-none d-md-block">
+        <!-- Optional caption content here -->
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'home/img/hinh2.jpg' %}" class="d-block mx-auto" alt="..." style="max-height: 300px; width: 50%; object-fit: cover;">
+      <div class="carousel-caption d-none d-md-block">
+        <!-- Optional caption content here -->
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
           <!-- main body-->
           {% block banner_slider  %}
-          <div id="carouselExampleDark" class="carousel carousel-dark slide">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="10000">
-                <img src="{% static 'home/img/ca1.jpg' %}" class="d-block mx-auto" alt="..." style="max-height: 300px; width: 50%; object-fit: cover;">
-                <div class="carousel-caption d-none d-md-block">
-                  <!-- Optional caption content here -->
+          
+                    <!DOCTYPE html>
+          <html lang="vi">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Dịch vụ vận chuyển cá Koi Nhật Bản về Việt Nam - Ezbuy Japan</title>
+              <link rel="stylesheet" href="style.css">
+              <style>
+                body {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                    margin: 0;
+                    background-color: #f5f5f5;
+                }
+                .wrapper {
+                    width: 80%;
+                    max-width: 900px;
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                h1 {
+                  text-align: center;
+              }
+              .center_container {
+                text-align: center; /* Căn giữa nội dung trong container */
+                margin: 20px; /* Thêm khoảng cách xung quanh */
+            }
+            .transport-image {
+                max-width: 50%; /* Giảm kích thước ảnh xuống 50% so với container */
+                height: auto; /* Giữ nguyên tỷ lệ khung hình */
+            }
+            </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>Dịch vụ vận chuyển cá Koi </h1>
+                  <nav class="rounded-lg border border-blue-400 bg-blue-100 p-4 lg:p-6 my-4">
+                    <ul>
+                        <li class="head2 text-blue-500 font-semibold mb-2">
+                            <a href="#h2-1" class="hover:underline">Cá Koi và các đặc tính sinh học</a>
+                            <ul class="ml-4">
+                                <li class="head3 text-blue-400 mb-1">
+                                    <a href="#h3-2" class="hover:underline">Cá Koi là gì?</a>
+                                </li>
+                                <li class="head3 text-blue-400 mb-1">
+                                    <a href="#h3-3" class="hover:underline">Đặc điểm sinh học của cá Koi</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="head2 text-blue-500 font-semibold mb-2">
+                            <a href="#h2-4" class="hover:underline">Quy trình vận chuyển cá Koi Nhật</a>
+                        </li>
+                        <li class="head2 text-blue-500 font-semibold mb-2">
+                            <a href="#h2-5" class="hover:underline">Các lưu ý khi vận chuyển cá Koi từ Nhật về Việt Nam</a>
+                            <ul class="ml-4">
+                                <li class="head3 text-blue-400 mb-1">
+                                    <a href="#h3-6" class="hover:underline">Cách đóng gói cá Koi</a>
+                                    <ul class="ml-6 text-gray-600">
+                                        
+                                    </ul>
+                                </li>
+                                <li class="head3 text-blue-400 mb-1">
+                                    <a href="#h3-7" class="hover:underline">Quy tắc bảo quản cá Koi trong quá trình vận chuyển</a>
+                                    <ul class="ml-6 text-gray-600">
+                                        
+                                    </ul>
+                                </li>
+                                <li class="head3 text-blue-400 mb-1">
+                                    <a href="#h3-8" class="hover:underline">Thủ tục hải quan khi vận chuyển cá Koi</a>
+                                    <ul class="ml-6 text-gray-600">
+                                        
+                                    </ul>
+                                </li>
+                                <li class="head3 text-blue-400 mb-1">
+                                    <a href="#h3-9" class="hover:underline">Chăm sóc sau vận chuyển</a>
+                                    <ul class="ml-6 text-gray-600">
+                                        
+                                    </ul>
+                                </li>
+                                <li class="head3 text-blue-400 mb-1">
+                                    <a href="#h3-10" class="hover:underline">Các rủi ro có thể gặp phải</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="head2 text-blue-500 font-semibold mb-2">
+                            <a href="#h2-11" class="hover:underline">Phương thức vận chuyển cá Koi Nhật an toàn và hiệu quả</a>
+                        </li>
+                        <li class="head2 text-blue-500 font-semibold mb-2">
+                            <a href="#h2-12" class="hover:underline">Giá cước dịch vụ vận chuyển cá Koi Nhật</a>
+                        </li>
+                        <li class="head2 text-blue-500 font-semibold mb-2">
+                            <a href="#h2-13" class="hover:underline">Thời gian nhận hàng khi sử dụng dịch vụ</a>
+                        </li>
+                        <li class="head2 text-blue-500 font-semibold mb-2">
+                            <a href="#h2-15" class="hover:underline">Tại sao nên sử dụng dịch vụ vận chuyển cá Koi Nhật chuyên nghiệp</a>
+                        </li>
+                        <li class="head2 text-blue-500 font-semibold mb-2">
+                            <a href="#h2-16" class="hover:underline">Koi Transport - Đơn vị cung cấp dịch vụ uy tín</a>
+                        </li>
+                    </ul>
+                </nav>
+                
+                  
+                  <h2 id="h2-1">Cá Koi và các đặc tính sinh học</h2>
+                  <h5>Cá Koi là gì?</h5>
+                  <p>Cá Koi (鯉, tên khoa học <span class="highlight">Cyproys Carioi</span>) là một giống cá chép có hoa văn sặc sỡ, có nguồn gốc từ Trung Quốc nhưng phát triển phổ biến tại Nhật Bản. Tên gọi Koi theo tiếng Nhật có nghĩa là cá chép. Giống cá này được coi là biểu tượng của sự may mắn, thịnh vượng và thành công trong văn hóa nhiều nước.</p>
+                  
+                  <div class="center_container">
+                    <img src="/static/home/img/hinh1.jpg" alt="Vận chuyển KOITRANSPORT" class="transport-image">
+                    <p>Cá chép Koi là loài cá chép nhiều màu sắc, biểu tượng của sự may mắn.</p>
                 </div>
-              </div>
-              <div class="carousel-item" data-bs-interval="2000">
-                <img src="{% static 'home/img/ca2.jpg' %}" class="d-block mx-auto" alt="..." style="max-height: 300px; width: 50%; object-fit: cover;">
-                <div class="carousel-caption d-none d-md-block">
-                  <!-- Optional caption content here -->
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="{% static 'home/img/hinh2.jpg' %}" class="d-block mx-auto" alt="..." style="max-height: 300px; width: 50%; object-fit: cover;">
-                <div class="carousel-caption d-none d-md-block">
-                  <!-- Optional caption content here -->
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
+                
+                
+                
+                  <h3>Đặc điểm sinh học của cá Koi</h3>
+                  <ul>
+                    
+                      <li><strong>Hình dạng:</strong> Cá Koi thân thon dài, có vảy phản chiếu ánh sáng với các hoa văn độc đáo. Chúng có nhiều màu sắc sặc sỡ như đỏ, trắng, đen, vàng, xanh lam, cam,...</li>
+                      <li><strong>Kích thước:</strong> Cá Koi trong độ tuổi 4-6 tháng sẽ dài khoảng 15cm, từ một tuổi size 20-25cm, hai tuổi 35-45cm, ba tuổi 50-60cm, năm tuổi 65-70cm, và sau đó, đến 10 tuổi 75-80cm. Kích thước của cá Koi còn phụ thuộc vào điều kiện nuôi dưỡng và giống loài. </li>
+                      <li><strong>Tuổi thọ:</strong> Tuổi thọ trung bình của cá Koi là 20-30 năm nếu được chăm sóc đúng cách. Tuy nhiên, một số cá Koi có thể sống đến 50 năm hoặc hơn trong điều kiện môi trường lý tưởng.</li>
+                      <li><strong>Thức ăn:</strong> Cá Koi là loài ăn tạp, chủ yếu ăn tảo, côn trùng, giun và thức ăn viên đặc biệt.</li>
+                      <li><strong>Môi trường sống:</strong> Cá Koi ưa sống trong vùng nước sạch, có nồng độ oxy cao và nhiệt độ từ 18-25 độ C. Chúng cần không gian rộng rãi để bơi lội và tăng trưởng.</li>
+                  </ul>
+
+                  <h3 id="h2-4">Quy trình vận chuyển cá Koi Nhật</h3>
+                  <ul>
+                    <h8>Một quy trình vận chuyển cá Koi Nhật Bản chuyên nghiệp thường bao gồm các bước sau:</h8>
+                      <li><strong>Đóng gói:</strong> Cá Koi cần được đóng gói trong túi ni lông được bơm oxy và nước, sau đó được đặt trong hộp cách ly bằng bìa cứng hoặc xốp để bảo vệ cá trong quá trình vận chuyển.</li>
+                      <div class="center_container">
+                        <img src="/static/home/img/hinh2.jpg" alt="Vận chuyển KOITRANSPORT" class="transport-image">
+                        <p>Cá Koi cần được đóng gói trong túi nilon có bơm oxy và nước trước khi vận chuyển
+                        </p>
+                    </div>
+                      <li><strong>Vận chuyển:</strong>Cá Koi được vận chuyển bằng đường hàng không hoặc đường biển trong các thùng chuyên dụng có hệ thống thông gió và kiểm soát nhiệt độ.</li>
+                      <li><strong>Chăm sóc trong quá trình vận chuyển:</strong> Cá Koi được theo dõi thường xuyên trong quá trình vận chuyển để đảm bảo chất lượng nước, nồng độ oxy và nhiệt độ phù hợp.</li>
+                      <li><strong>Thủ tục hải quan:</strong> Khi cá Koi đến Việt Nam, người nhận cần thực hiện các thủ tục hải quan cần thiết để thông quan hàng hóa.</li>
+                      <li><strong>Chăm sóc sau vận chuyển:</strong> Sau khi cá Koi được thông quan, chúng cần được chăm sóc đặc biệt để thích nghi với môi trường mới.</li>
+                      <div class="center_container">
+                        <img src="/static/home/img/hinh3.jpg" alt="Vận chuyển KOITRANSPORT" class="transport-image">
+                        <p>Cá Koi cần được theo dõi và chăm sóc đặc biệt sau khi vận chuyển
+                        </p>
+                    </div>
+                      <h9> Các bước tiến hành phải chính xác và nghiêm ngặt để việc vận chuyển cá Koi diễn ra trơn tru nhất có thể. Bởi chỉ cần sơ suất, trục trặc ở một công đoạn thì nguy cơ toàn bộ lô hàng cá Koi bị chết là rất cao. </h9>
+                  </ul>
+          
+                  <h3 id="h2-5">Các lưu ý khi vận chuyển cá Koi từ Nhật về Việt Nam</h3>
+                  <h6 id="h3-6">Cách đóng gói cá Koi</h6>
+                  <ul>
+                      <li>Sử dụng túi ni lông được bơm đầy oxy và nước</li>
+                      <li>Thắt chặt miệng túi và cố định bằng dây chun</li>
+                      <li>Đặt cá Koi trong hộp cách ly chống sốc</li>
+                      <li>Đổ nước vào hộp và chừa lại khoảng không khí ở phía trên</li>
+                  </ul>
+                  
+                  <h6 id="h3-7">Quy tắc bảo quản cá Koi trong quá trình vận chuyển</h6>
+                  <ul>
+                      <li>Giữ nhiệt độ nước trong khoảng 18-25 độ C</li>
+                      <li>Theo dõi nồng độ oxy và bổ sung oxy khi cần thiết</li>
+                      <li>Thay nước thường xuyên để giữ cho nước sạch</li>
+                  </ul>
+                  
+                  <h6 id="h3-8">Thủ tục hải quan khi vận chuyển cá Koi</h6>
+                  <ul>
+                      <li>Xuất trình giấy chứng nhận kiểm dịch động vật từ Nhật Bản</li>
+                      <li>Khai báo với cơ quan hải quan Việt Nam về chủng loại, số lượng và giá trị cá Koi</li>
+                      <li>Giấy phép nhập khẩu, nộp thuế nhập khẩu nếu có</li>
+                      <li>Chứng nhận xuất xứ hàng hóa</li>
+                      <li>Bill mua hàng</li>
+                  </ul>
+                  
+                  <h6 id="h3-9">Chăm sóc sau vận chuyển</h6>
+                  <ul>
+                      <li>Cho cá Koi vào hồ cách ly và theo dõi trong 1-2 tuần</li>
+                      <li>Thay nước thường xuyên và bổ sung vi khuẩn có lợi</li>
+                      <li>Cho cá Koi ăn nhẹ và tăng dần lượng thức ăn</li>
+                      <li>Theo dõi sức khỏe của cá Koi và điều trị bất kỳ bệnh tật nào nếu có</li>
+                  </ul>
+                  
+                 
+                  <h6 id="h3-11">Các rủi ro có thể gặp phải</h6>
+                  <ul>
+                      <li>Cá Koi bị stress hoặc chết do đóng gói và vận chuyển không đúng cách</li>
+                      <li>Cá Koi mắc bệnh trong quá trình vận chuyển</li>
+                      <li>Cá Koi bị thương do va đập</li>
+                      <li>Rủi ro hải quan hoặc chậm trễ giao hàng</li>
+                  </ul>
+          
+                  <h3 id="h2-11">Phương thức vận chuyển cá Koi Nhật an toàn và hiệu quả</h3>
+                  <ul>
+                      <strong>Vận chuyển hàng không: </strong>Đây là phương thức vận chuyển nhanh chóng và có thể kiểm soát nhiệt độ tốt. Tuy nhiên, chi phí vận chuyển bằng hàng không cao hơn so với vận chuyển bằng đường biển.
+                      <p> </p>
+                      <strong>Vận chuyển đường biển:</strong> Đây là phương thức vận chuyển tiết kiệm hơn, nhưng thời gian vận chuyển lâu hơn và rủi ro cá Koi bị stress cao hơn.
+                      <p></p>
+                      <h9> Tùy thuộc vào nhu cầu và ngân sách của khách hàng, các công ty vận chuyển sẽ lựa chọn phương thức phù hợp để đảm bảo an toàn và hiệu quả cho cá Koi trong suốt quá trình vận chuyển. </h9>
+                  </ul>
+                  
+                  
+                  <h2  id="h2-12">Giá cước dịch vụ vận chuyển cá Koi Nhật</h2>
+                  <h6 id="h3-11">Giá cước của dịch vụ vận chuyển cá Koi Nhật Bản tùy thuộc vào các yếu tố sau:</h6>
+                  <ul>
+                      <li>Khối lượng và số lượng cá Koi.</li>
+                      <li>Phương thức vận chuyển.</li>
+                      <li>Địa điểm xuất xứ và địa điểm đến</li>
+                      <li>Các dịch vụ gia tăng khác.</li>
+                      <p></p>
+                      <h9> Để biết giá cước chính xác từng thời điểm, khách hàng vui lòng liên hệ đội ngũ Ezbuy để nhận báo giá. 
+                      </h9>
+                  </ul>
+                  
+                  <h2 id="h2-13">Thời gian nhận hàng khi sử dụng dịch vụ vận chuyển cá Koi Nhật</h2>
+                  <h6 id="h3-11">Thời gian nhận hàng khi sử dụng dịch vụ vận chuyển cá Koi Nhật Bản phụ thuộc vào phương thức vận chuyển và địa điểm giao hàng.</h6>
+                  <ul>
+                  <li><strong>Vận chuyển hàng không: </strong>3-5 ngày làm việc.</li>
+                    
+                  <li><strong>Vận chuyển đường biển: </strong>15-30 ngày làm việc.</li>
+                      
+                  </ul>
+                  <h2 id="h2-15">Tại sao nên dử dụng dịch vụ vận chuyển cá Koi Nhật chuyên nghiệp</h2>
+                  
+                  <ul>
+                    <li>Đảm bảo cá Koi được đóng gói, vận chuyển và chăm sóc đúng cách.</li>
+                    <li>Giảm thiểu rủi ro cá Koi bị stress, hư hỏng hoặc chết trong quá trình vận chuyển.</li>
+                    <li>Tiết kiệm thời gian và công sức cho khách hàng.</li>
+                    <div class="center_container">
+                        <img src="/static/home/img/hinh4.jpg" alt="Vận chuyển KOITRANSPORT" class="transport-image">
+                        
+                    </div>
+                    
+                  </ul>
           
           
-          
-         
+                  <h2>Koi Transport - Đơn vị cung cấp dịch vụ vận chuyển cá Koi Nhật nhanh chóng, an toàn và uy tín</h2>
+                  <section>
+                    <p>
+                        <span class="text-blue-500 font-semibold">Koi Transport</span> là một trong những đơn vị hàng đầu trong lĩnh vực vận chuyển hàng hóa Nhật - Việt, trong đó có dịch vụ vận chuyển cá Koi Nhật Bản về Việt Nam. Với đội ngũ nhân viên chuyên nghiệp và giàu kinh nghiệm, Koi Transport cam kết mang đến dịch vụ vận chuyển cá Koi chuyên nghiệp, cam kết cá sống khỏe khi cập bến Việt Nam.
+                    </p>
+                </section>
+                
+                  <ul>
+                    <h6 id="h2-16"> Koi Transport sẽ cam kết với khách hàng: </h6>
+                    <section class="bg-gray-100 p-6 rounded-lg">
+                      
+                      <ul class="list-disc pl-6 space-y-2 text-gray-700">
+                          <li><strong>Quy trình vận chuyển chuyên nghiệp:</strong> Koi Transport tuân thủ nghiêm ngặt các quy trình đóng gói, bảo quản và vận chuyển cá Koi theo tiêu chuẩn quốc tế, giảm thiểu tối đa rủi ro trong quá trình vận chuyển.</li>
+                          <li><strong>Đội ngũ nhân viên giàu kinh nghiệm:</strong> Đội ngũ nhân viên của Koi Transport được đào tạo bài bản và có nhiều năm kinh nghiệm trong lĩnh vực vận chuyển động vật sống, đảm bảo sự an toàn và chăm sóc tốt nhất cho cá Koi.</li>
+                          <li><strong>Phương thức vận chuyển linh hoạt:</strong> Koi Transport cung cấp tùy chọn phương thức vận chuyển hàng không và đường biển, phù hợp với nhu cầu và ngân sách của khách hàng.</li>
+                          <li><strong>Dịch vụ hậu cần chuyên nghiệp:</strong> Koi Transport tư vấn và hỗ trợ khách hàng trong quá trình làm thủ tục hải quan, cũng như cung cấp hướng dẫn chăm sóc cá Koi sau vận chuyển.</li>
+                          <li><strong>Giá cả cạnh tranh:</strong> Với mức giá cạnh tranh và minh bạch, Koi Transport mang đến giải pháp vận chuyển cá Koi hiệu quả và tiết kiệm.</li>
+                      </ul>
+                      <p class="mt-4 text-gray-700">Với sự đảm bảo về chất lượng dịch vụ và uy tín trên thị trường, Koi Transport đã trở thành lựa chọn hàng đầu của nhiều khách hàng yêu thích nuôi cá Koi tại Việt Nam.</p>
+                      <p class="mt-4 text-gray-700">Việc vận chuyển cá Koi từ Nhật Bản về Việt Nam đòi hỏi quy trình chuyên nghiệp, đảm bảo an toàn và chăm sóc tốt nhất cho đàn cá quý hiếm này. Bằng việc sử dụng dịch vụ vận chuyển cá Koi Nhật Bản chuyên nghiệp của Koi Transport, khách hàng có thể yên tâm rằng đàn cá Koi của mình sẽ được vận chuyển an toàn, nhanh chóng và được chăm sóc chu đáo trong suốt quá trình di chuyển.</p>
+                      
+                  </section>
+                  
+                  </ul>
+                  
+                
+              </div>
+          </body>
+          </html>
           
           {% endblock banner_slider %}
            {% block main-content  %}{% endblock main-content %}

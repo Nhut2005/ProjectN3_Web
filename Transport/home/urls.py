@@ -22,7 +22,7 @@ urlpatterns = [
     path('customer-delete/', views.delete_customer, name="customer-delete"),
     path('customer-new/', views.new_customer, name="customer-new"),
 
-    path('login/', views.login_user, name='login'),
+    path('login/', views.login_user, name='login_user'),
     path('register/', views.register_user, name='register_user'),
     path("account", views.view_account, name="account"),
     path('login/', views.login_user, name='login_user'),
@@ -47,7 +47,7 @@ urlpatterns = [
     path('dich-vu-van-chuyen-ca-koi-nhat', views.view_dichvu, name='vanchuyenca'),
     path('profile', views.view_tkprofile, name='profile'),
     path('bang-gia', views.price_list, name='bang-gia'),
-
+    path('koi-transport', views.view_congty, name='cong-ty'),
  
 
 ]

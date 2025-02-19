@@ -61,16 +61,20 @@
     </style>
 </head>
 <body>
-    <form class="register-form" onsubmit="return validateForm()">
+    <form class="register-form" action="{% url 'register_user' %}" method="POST" onsubmit="return validateForm()">
+        {% csrf_token %}
         <h2>Đăng ký tài khoản</h2>
-        <input type="text" id="username" placeholder="Tên đăng nhập" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Mật khẩu" required>
-        <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu" required>
-        <p><a href="{% url 'login' %}" class="text-primary">Đăng ký</a></p>
+        <input type="text" name="username" id="username" placeholder="Tên đăng nhập" required>
+        <input type="email" name="email" id="email" placeholder="Email" required>
+        <input type="password" name="password" id="password" placeholder="Mật khẩu" required>
+        <input type="password" name="confirm_password" id="confirm-password" placeholder="Nhập lại mật khẩu" required>
         
-        <p>Đã có tài khoản?<a href="{% url 'login' %}" class="text-primary">Đăng nhập</a></p>
+        <button type="submit" id="register-button">Đăng ký</button>
+        
+        <p>Đã có tài khoản? <a href="{% url 'login_user' %}" class="text-primary">Đăng nhập</a></p>
     </form>
+    
+    
 
     <script>
         function validateForm() {

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Employee(models.Model):
@@ -46,4 +47,14 @@ class ServicePrice(models.Model):
     def __str__(self):
         return self.service_type
 	
-	
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    gender = models.CharField(max_length=10, choices=[('male', 'Nam'), ('female', 'Nữ'), ('other', 'Khác')], default='male')
+    dob = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
+
+

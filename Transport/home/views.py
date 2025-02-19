@@ -10,7 +10,9 @@ from .forms import EmployeeNewForm
 from django.contrib.auth import authenticate, login
 from .forms import PackageForm  # Đảm bảo import form
 from .models import ServicePrice
-
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.core.cache import cache 
 from django.views.decorators.cache import cache_page
 
@@ -25,17 +27,19 @@ def clear_cache(request):
 
 def login_user(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST["username"]
+        password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
-        
+
         if user is not None:
             login(request, user)
-            return redirect('account')  # Chuyển hướng đến trang account.html
+            return redirect("account")  # Chuyển hướng về trang chính sau khi đăng nhập
         else:
-            return render(request, 'home/login.html', {'error': 'Sai tên đăng nhập hoặc mật khẩu'})
-    
-    return render(request, 'home/login.html')
+            messages.error(request, "Tên đăng nhập hoặc mật khẩu không đúng.")
+            return redirect("login_user")
+
+    return render(request, "home/login.html")
+
 
 
 def package(request):
@@ -279,13 +283,34 @@ def view_profile(request):
     }
     return HttpResponse(template.render(context, request))
 
+
 def register_user(request):
-    package = Order.objects.filter(id=1).first() 
-    template = loader.get_template('home/register.html')
-    context = {
-        'package': package,
-    }
-    return HttpResponse(template.render(context, request))
+    if request.method == "POST":
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        confirm_password = request.POST["confirm_password"]
+
+        if password != confirm_password:
+            messages.error(request, "Mật khẩu nhập lại không khớp.")
+            return redirect("register_user")
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Tên đăng nhập đã tồn tại.")
+            return redirect("register_user")
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email đã được sử dụng.")
+            return redirect("register_user")
+
+        # Tạo tài khoản mới
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+
+        messages.success(request, "Đăng ký thành công! Hãy đăng nhập.")
+        return redirect("login_user")
+
+    return render(request, "home/register.html")
 
 
 def view_dichvu(request):
@@ -314,5 +339,10 @@ def price_list(request):
     return render(request, 'home/pricePage.html', {'prices': prices})
 
 
-
-
+def view_congty(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/congty.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))
