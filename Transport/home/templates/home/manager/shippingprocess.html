@@ -37,12 +37,13 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <a class="navbar-brand fw-bold" href="{% url 'manager' %}">Quản lý vận chuyển</a>
-        <a href="#">📦 Đơn vận chuyển</a>
-        <a href="#">🚛 Quá trình vận chuyển</a>
-        <a href="#">💰 Bảng giá dịch vụ</a>
-        <a href="#">📊 Dashboard & Báo cáo</a>
-        <a href="#">⭐ Đánh giá & Phản hồi</a>
-        <a href="#">📝 Hồ sơ khách hàng</a>
+        <a href="{% url 'shipping-menu' %}">📦 Đơn vận chuyển</a>
+        <a href="{% url 'shipping-process' %}">🚛 Quá trình vận chuyển</a>
+        <a href="{% url 'price-list' %}">💰 Bảng giá dịch vụ</a>
+        <a href="{% url 'dashboard-report' %}">📊 Dashboard & Báo cáo</a>
+        <a href="{% url 'feedback' %}">⭐ Đánh giá & Phản hồi</a>
+        <a href="{% url 'customer-profile' %}">📝 Hồ sơ khách hàng</a>
+        <a href="{% url 'nhanvien' %}">📝 Hồ sơ nhân viên</a>
     </div>
     
     <!-- Nội dung chính -->

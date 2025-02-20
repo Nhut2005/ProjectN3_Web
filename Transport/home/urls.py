@@ -48,6 +48,7 @@ urlpatterns = [
     path('profile', views.view_tkprofile, name='profile'),
     path('bang-gia', views.price_list, name='bang-gia'),
     path('koi-transport', views.view_congty, name='cong-ty'),
- 
+
+    path('nhanvien', views.view_nhanvien, name='nhanvien')
 
 ]

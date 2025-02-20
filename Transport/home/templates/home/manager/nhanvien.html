@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản Lý Vận Chuyển Cá Cảnh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #343a40;
+            color: white;
+            padding: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+        }
+        .sidebar a:hover {
+            background: #495057;
+            border-radius: 5px;
+        }
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a class="navbar-brand fw-bold" href="{% url 'manager' %}">Quản lý vận chuyển</a>
+        <a href="{% url 'shipping-menu' %}">📦 Đơn vận chuyển</a>
+        <a href="{% url 'shipping-process' %}">🚛 Quá trình vận chuyển</a>
+        <a href="{% url 'price-list' %}">💰 Bảng giá dịch vụ</a>
+        <a href="{% url 'dashboard-report' %}">📊 Dashboard & Báo cáo</a>
+        <a href="{% url 'feedback' %}">⭐ Đánh giá & Phản hồi</a>
+        <a href="{% url 'customer-profile' %}">📝 Hồ sơ khách hàng</a>
+        <a href="{% url 'nhanvien' %}">📝 Hồ sơ nhân viên</a>
+    </div>
+    
+    <!-- Nội dung chính -->
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Thêm Nhân Viên</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body { background-color: #f8f9fa; }
+            .card { border-radius: 10px; }
+            .table-container { max-height: 300px; overflow-y: auto; }
+        </style>
+    </head>
+    <body>
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="col-md-6 mx-auto">
+                <div class="card shadow-sm">
+                    <h5 class="card-header bg-primary text-white">Thêm Nhân Viên</h5>
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <label class="form-label">Họ và Tên</label>
+                            <input id="name" class="form-control" type="text" placeholder="Nguyễn Văn A">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Giới Tính</label>
+                            <select id="gender" class="form-select">
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Ngày Sinh</label>
+                            <input id="birthday" class="form-control" type="date">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Email</label>
+                            <input id="email" class="form-control" type="email" placeholder="nguyenvana@gmail.com">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Số Điện Thoại</label>
+                            <input id="phone" class="form-control" type="text" placeholder="0368894615">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Lương Cơ Bản</label>
+                            <input id="salary" class="form-control" type="number" placeholder="5000000">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Chức Vụ</label>
+                            <select id="role" class="form-select">
+                                <option value="">Chọn</option>
+                                <option value="1">Nhân viên giao hàng</option>
+                                <option value="2">Quản lý</option>
+                                <option value="3">Nhân viên bán hàng</option>
+                            </select>
+                        </div>
+                        <button onclick="addEmployee()" class="btn btn-primary w-100">Lưu</button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-8 mx-auto mt-4">
+                <div class="card">
+                    <h5 class="card-header">Danh Sách Nhân Viên</h5>
+                    <div class="card-body table-container">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Họ và Tên</th>
+                                    <th>Giới Tính</th>
+                                    <th>Ngày Sinh</th>
+                                    <th>Email</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Lương Cơ Bản</th>
+                                    <th>Chức Vụ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeeList">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            function addEmployee() {
+                let name = document.getElementById('name').value;
+                let gender = document.getElementById('gender').value;
+                let birthday = document.getElementById('birthday').value;
+                let email = document.getElementById('email').value;
+                let phone = document.getElementById('phone').value;
+                let salary = document.getElementById('salary').value;
+                let role = document.getElementById('role').selectedOptions[0].text;
+                
+                if (!name || !gender || !birthday || !email || !phone || !salary || !role) {
+                    alert('Vui lòng nhập đầy đủ thông tin!');
+                    return;
+                }
+    
+                let table = document.getElementById('employeeList');
+                let row = table.insertRow();
+                row.innerHTML = `<td>${name}</td><td>${gender}</td><td>${birthday}</td><td>${email}</td><td>${phone}</td><td>${salary}</td><td>${role}</td>`;
+            }
+        </script>
+    </body>
+    </html>
+
+
+</body>
+</html>

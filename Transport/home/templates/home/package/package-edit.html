@@ -15,9 +15,18 @@
             width: 100%;
             top: 0;
             left: 0;
-            z-index: 1030; /* Đảm bảo nằm trên cùng */
-            background-color:rgb(165, 186, 210);
-            border-bottom: 1px solid #ddd;
+            z-index: 1030;
+            background-color: #2C3E50;
+            border-bottom: 2px solid #ddd;
+            padding: 10px 20px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: white !important;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 10px;
         }
 
         /* Sidebar cố định bên trái */
@@ -25,19 +34,63 @@
             width: 250px;
             height: 100vh;
             position: fixed;
-            top: 56px; /* Để không bị navbar che */
+            top: 56px;
             left: 0;
-            background-color: #f8f9fa;
+            background-color: #34495E;
+            color: white;
             padding-top: 20px;
-            border-right: 1px solid #ddd;
-            overflow-y: auto; /* Nếu danh sách dài, có thể cuộn */
+            border-right: 2px solid #ddd;
+        }
+
+        .sidebar h6 {
+            text-transform: uppercase;
+            padding-left: 15px;
+            font-size: 14px;
+            color: #BDC3C7;
+        }
+
+        .sidebar .nav-item {
+            padding: 10px;
+        }
+
+        .sidebar .btn {
+            width: 100%;
+            text-align: left;
+            color: white;
+            background: none;
+            border: none;
+            font-size: 16px;
+        }
+
+        .sidebar .btn:hover {
+            background-color: #1ABC9C;
         }
 
         /* Đẩy nội dung chính sang phải */
         .main-content {
-            margin-left: 260px; /* Không bị che bởi sidebar */
-            margin-top: 70px; /* Không bị navbar che */
+            margin-left: 270px;
+            margin-top: 70px;
             padding: 20px;
+        }
+
+        /* Nút thông báo */
+        .btn-notification {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: white;
+            font-size: 12px;
+            border-radius: 50%;
+            padding: 3px 6px;
         }
 
         /* Căn chỉnh phần menu phải */
@@ -47,25 +100,8 @@
             align-items: center;
         }
 
-        /* Nút thông báo */
-        .btn-notification {
-            position: relative;
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            margin-right: 10px;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            transform: translate(50%, -50%);
-            background: red;
-            color: white;
-            font-size: 12px;
-            border-radius: 50%;
-            padding: 3px 6px;
+        .dropdown-menu {
+            min-width: 200px;
         }
     </style>
 </head>
@@ -73,16 +109,14 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light px-3">
+    <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand fw-bold" href="{% url 'account' %}">KOITRANSPORT</a>
-
         <!-- Phần bên phải của Navbar -->
         <div class="navbar-right">
             <!-- Thông báo -->
             <button class="btn-notification">
-                <i class="bi bi-bell"></i>
-                🔔
-                <span class="notification-badge">3</span>
+                <i class="fas fa-bell"></i>
+               
             </button>
 
             <!-- Ngôn ngữ & Tiền tệ -->
@@ -95,79 +129,56 @@
                     <li><a class="dropdown-item" href="#">Viet Nam</a></li>
                     <li><a class="dropdown-item" href="#">USA</a></li>
                     <li><a class="dropdown-item" href="#">Japan</a></li>
-                    <li><hr class="dropdown-divider"></li>
-
-                    <li class="dropdown-header">🏙️ City</li>
-                    <li><a class="dropdown-item" href="#">Hà Nội</a></li>
-                    <li><a class="dropdown-item" href="#">TP. Hồ Chí Minh</a></li>
-                    <li><a class="dropdown-item" href="#">Đà Nẵng</a></li>
-                    <li><hr class="dropdown-divider"></li>
-
-                    <li class="dropdown-header">🌍 Language</li>
-                    <li><a class="dropdown-item" href="#">English</a></li>
-                    <li><a class="dropdown-item" href="#">Tiếng Việt</a></li>
-                    <li><hr class="dropdown-divider"></li>
-
-                    <li class="dropdown-header">💰 Currency</li>
-                    <li><a class="dropdown-item" href="#">VND</a></li>
-                    <li><a class="dropdown-item" href="#">USD</a></li>
-                    <li><a class="dropdown-item" href="#">EUR</a></li>
                 </ul>
             </div>
 
             <!-- Thông tin người dùng -->
             <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Nhựt Nguyễn
+                <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+                    <span>👤 {{ user.username }}</span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a href="{% url 'profile' %}" class="dropdown-item">Profile</a></li>
+                    <li><a href="{% url 'setting' %}" class="dropdown-item">Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                    <li>
+                        <form action="{% url 'home' %}" method="post" class="d-flex justify-content-center">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item text-danger">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Sidebar -->
-    <div class="sidebar p-3">
-        <h6 class="text-secondary">Services</h6>
+    <div class="sidebar">
+        <h6>Services</h6>
         <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-house-door"></i> My Orders</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-ticket"></i> Voucher</a></li>
+            <li class="nav-item"><a href="{% url 'my_order' %}" class="btn">📦 Đơn hàng</a></li>
+            <li class="nav-item"><a href="{% url 'voucher' %}" class="btn">🎟️ Voucher</a></li>
         </ul>
-    
+
         <hr>
-    
-        <h6 class="text-secondary">Express</h6>
+
+        <h6>Express</h6>
         <ul class="nav flex-column">
-            <li class="nav-item">
-                 <a class="nav-link" href="#">
-                    <i class="bi bi-truck"></i> Create Package
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-truck"></i> Manage Shipment
-                </a>
-            </li>
+            <li class="nav-item"><a href="{% url 'create_package' %}" class="btn">✈️ Tạo đơn hàng</a></li>
         </ul>
-    
+
         <hr>
-    
-        <h6 class="text-secondary">Utilities</h6>
+
+        <h6>Utilities</h6>
         <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-geo-alt"></i> Address Book</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-credit-card"></i> Transaction</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-calculator"></i> Shipping Calculator</a></li>
+            <li class="nav-item"><a href="{% url 'addressess' %}" class="btn">📍 Sổ địa chỉ</a></li>
         </ul>
-    
+
         <hr>
-    
-        <h6 class="text-secondary">Settings</h6>
+
+        <h6>Settings</h6>
         <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear"></i> Settings</a></li>
+            <li class="nav-item"><a href="{% url 'setting' %}" class="btn">⚙️ Tài khoản của tôi</a></li>
         </ul>
     </div>
 
@@ -319,6 +330,7 @@
                 // Hiển thị thông báo thành công
                 displaySuccessMessage();
             }
+            
     
             // Hàm hiển thị thông báo thành công
             function displaySuccessMessage() {

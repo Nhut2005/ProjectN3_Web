@@ -346,3 +346,11 @@ def view_congty(request):
         'package': package,
     }
     return HttpResponse(template.render(context, request))
+
+def view_nhanvien(request):
+    package = Order.objects.filter(id=1).first() 
+    template = loader.get_template('home/manager/nhanvien.html')
+    context = {
+        'package': package,
+    }
+    return HttpResponse(template.render(context, request))

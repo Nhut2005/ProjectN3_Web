@@ -45,18 +45,20 @@
         .form-control {
             width: 150px;
         }
+        
     </style>
 </head>
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
         <a class="navbar-brand fw-bold" href="{% url 'manager' %}">Quản lý vận chuyển</a>
-        <a href="#">📦 Đơn vận chuyển</a>
-        <a href="#">🚛 Quá trình vận chuyển</a>
-        <a href="#">💰 Bảng giá dịch vụ</a>
-        <a href="#">📊 Dashboard & Báo cáo</a>
-        <a href="#">⭐ Đánh giá & Phản hồi</a>
-        <a href="#">📝 Hồ sơ khách hàng</a>
+        <a href="{% url 'shipping-menu' %}">📦 Đơn vận chuyển</a>
+        <a href="{% url 'shipping-process' %}">🚛 Quá trình vận chuyển</a>
+        <a href="{% url 'price-list' %}">💰 Bảng giá dịch vụ</a>
+        <a href="{% url 'dashboard-report' %}">📊 Dashboard & Báo cáo</a>
+        <a href="{% url 'feedback' %}">⭐ Đánh giá & Phản hồi</a>
+        <a href="{% url 'customer-profile' %}">📝 Hồ sơ khách hàng</a>
+        <a href="{% url 'nhanvien' %}">📝 Hồ sơ nhân viên</a>
     </div>
     
     <!-- Nội dung chính -->
@@ -70,23 +72,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container mt-4">
-    <h2 class="mb-4">💰 Bảng Giá Dịch Vụ Vận Chuyển</h2>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped" id="serviceTable">
-            <thead class="table-dark">
-                <tr>
-                    <th>Loại Dịch Vụ</th>
-                    <th>Khoảng Cách</th>
-                    <th>Thời Gian Giao</th>
-                    <th>Giá (VND)</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody id="serviceTableBody"></tbody>
-        </table>
+    <div class="container d-flex justify-content-center mt-4">
+        <div class="col-md-10">
+            <h2 class="text-center mb-4">💰 Bảng Giá Dịch Vụ Vận Chuyển</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped text-center" id="serviceTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Loại Dịch Vụ</th>
+                            <th>Khoảng Cách</th>
+                            <th>Thời Gian Giao</th>
+                            <th>Giá (VND)</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="serviceTableBody"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
+    
 
 <script>
     const defaultData = [

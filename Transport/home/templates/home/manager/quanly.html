@@ -43,6 +43,7 @@
         <a href="{% url 'dashboard-report' %}">📊 Dashboard & Báo cáo</a>
         <a href="{% url 'feedback' %}">⭐ Đánh giá & Phản hồi</a>
         <a href="{% url 'customer-profile' %}">📝 Hồ sơ khách hàng</a>
+        <a href="{% url 'nhanvien' %}">📝 Hồ sơ nhân viên</a>
     </div>
     
     <!-- Nội dung chính -->
@@ -56,7 +57,7 @@
             <div class="card shadow-lg text-white bg-primary mb-3">
                 <div class="card-body">
                     <h5 class="card-title">📦 Tổng đơn hàng</h5>
-                    <h3 class="counter" data-target="120">0</h3>
+                    <h3 id="totalOrders" class="counter">0</h3>
                 </div>
             </div>
         </div>
@@ -64,7 +65,7 @@
             <div class="card shadow-lg text-white bg-warning mb-3">
                 <div class="card-body">
                     <h5 class="card-title">🚛 Đơn đang giao</h5>
-                    <h3 class="counter" data-target="35">0</h3>
+                    <h3 id="ongoingOrders" class="counter">0</h3>
                 </div>
             </div>
         </div>
@@ -72,12 +73,13 @@
             <div class="card shadow-lg text-white bg-success mb-3">
                 <div class="card-body">
                     <h5 class="card-title">✅ Đơn hoàn thành</h5>
-                    <h3 class="counter" data-target="80">0</h3>
+                    <h3 id="completedOrders" class="counter">0</h3>
                 </div>
             </div>
         </div>
     </div>
-
+    
+    
     <!-- Danh sách đơn hàng mới nhất -->
     <script>
         function displayOrderInfo() {
@@ -144,9 +146,40 @@
         }
         
         
+        function updateOrderStatistics() {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            
+            let totalOrders = orderHistory.length;
+            let ongoingOrders = orderHistory.filter(order => order.status === "Đang giao").length;
+            let completedOrders = orderHistory.filter(order => order.status === "Hoàn thành").length;
+        
+            document.getElementById("totalOrders").innerText = totalOrders;
+            document.getElementById("ongoingOrders").innerText = ongoingOrders;
+            document.getElementById("completedOrders").innerText = completedOrders;
+            
+            updateCharts(totalOrders, ongoingOrders, completedOrders);
+        }
+        
+        function updateCharts(total, ongoing, completed) {
+            let barChart = Chart.getChart("orderChart");
+            let pieChart = Chart.getChart("orderPieChart");
+            
+            if (barChart) {
+                barChart.data.datasets[0].data = [total, ongoing, completed];
+                barChart.update();
+            }
+            
+            if (pieChart) {
+                pieChart.data.datasets[0].data = [ongoing, completed, total - (ongoing + completed)];
+                pieChart.update();
+            }
+        }
+        
         window.onload = function() {
             displayOrderInfo();
+            updateOrderStatistics();
         };
+        
         
     </script>
     

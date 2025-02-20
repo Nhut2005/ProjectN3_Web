@@ -47,12 +47,13 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <a class="navbar-brand fw-bold" href="{% url 'manager' %}">Quản lý vận chuyển</a>
-        <a href="#">📦 Đơn vận chuyển</a>
-        <a href="#">🚛 Quá trình vận chuyển</a>
-        <a href="#">💰 Bảng giá dịch vụ</a>
-        <a href="#">📊 Dashboard & Báo cáo</a>
-        <a href="#">⭐ Đánh giá & Phản hồi</a>
-        <a href="#">📝 Hồ sơ khách hàng</a>
+        <a href="{% url 'shipping-menu' %}">📦 Đơn vận chuyển</a>
+        <a href="{% url 'shipping-process' %}">🚛 Quá trình vận chuyển</a>
+        <a href="{% url 'price-list' %}">💰 Bảng giá dịch vụ</a>
+        <a href="{% url 'dashboard-report' %}">📊 Dashboard & Báo cáo</a>
+        <a href="{% url 'feedback' %}">⭐ Đánh giá & Phản hồi</a>
+        <a href="{% url 'customer-profile' %}">📝 Hồ sơ khách hàng</a>
+        <a href="{% url 'nhanvien' %}">📝 Hồ sơ nhân viên</a>
     </div>
     
     <!-- Nội dung chính -->
@@ -63,58 +64,7 @@
                 <iframe title="DjangoDB" src="https://app.powerbi.com/reportEmbed?reportId=fc559f1e-0b3f-4dfd-be2e-dab88a68c502&autoAuth=true&embeddedDemo=true" allowFullScreen="true"></iframe>
             </div>
         </div>
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <div class="card text-white bg-primary mb-3">
-                    <div class="card-header">Tổng Đơn Hàng</div>
-                    <div class="card-body">
-                        <h5 class="card-title">150</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-white bg-success mb-3">
-                    <div class="card-header">Đơn Hàng Hoàn Thành</div>
-                    <div class="card-body">
-                        <h5 class="card-title">120</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-white bg-danger mb-3">
-                    <div class="card-header">Đơn Hàng Hủy</div>
-                    <div class="card-body">
-                        <h5 class="card-title">10</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h3 class="mt-4">Báo Cáo Doanh Thu</h3>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped mt-3">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Tháng</th>
-                        <th>Doanh Thu (VND)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Tháng 1</td>
-                        <td>500,000,000</td>
-                    </tr>
-                    <tr>
-                        <td>Tháng 2</td>
-                        <td>600,000,000</td>
-                    </tr>
-                    <tr>
-                        <td>Tháng 3</td>
-                        <td>550,000,000</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</body>
-</html>
+    
+       
+    
+        
